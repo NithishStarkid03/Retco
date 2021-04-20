@@ -1,0 +1,15 @@
+{
+    "seller":[
+        {
+            "id":1,
+            "name":"Ranjith"
+
+        },
+        {
+            "id":2,
+            "name":"Mounish"
+        }
+
+    ]
+
+}

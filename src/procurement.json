@@ -1,0 +1,18 @@
+{
+  "procurement_post": [
+    {
+      "additionalcost": "4000",
+      "status": "PURCHASED",
+      "procuredproduct": [
+        {
+          "priceperunitquantity": "40",
+          "totalunits": "25",
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10",
+          "productgroupId": "2"
+        }
+      ],
+      "sellerid": "4"
+    }
+  ]
+}
