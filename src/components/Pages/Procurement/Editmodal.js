@@ -35,14 +35,23 @@ class Editmodal extends Component {
             productdet:nextProps.productdet,
 
         })
-        console.log('edit',this.state.productdet)
+      
         
     }
 
     
 
     handleSave() {
-        const item = this.state;
+        const item = {
+
+          productgroupId:this.state.productgroupId,
+          prodcost:this.state.prodcost,
+          priceperunit:this.state.priceperunit,
+          totalunits:this.state.totalunits,
+          measurementunit:this.state.measurementunit,
+          quantityperunit:this.state.quantityperunit,
+
+        };
         this.props.saveModalDetails(item)
     }
       

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react'
-import { Button,ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { Container, Row, Col,Form } from 'reactstrap';
+import { Button,ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, CardBody } from 'reactstrap';
+import { Container, Row, Col,Form,Card } from 'reactstrap';
 
 import { Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Table} from 'reactstrap';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -57,7 +57,8 @@ class Purchaseentry extends Component {
       requiredItem: 0,
       payment:'',
       isOpen: false,
-      promptnewseller:0
+      promptnewseller:0,
+      confirmpostflag:0
 
 
 }
@@ -79,7 +80,6 @@ class Purchaseentry extends Component {
 }
 
   
-
 
   toggle(){ 
     this.setState({
@@ -300,8 +300,16 @@ saveModalDetails(item) {
 }
 
 
-openpost = () => this.setState({ isOpen: ! this.state.isOpen });
+openpost = () => 
+{
+  if(this.state.additionalcost && this.state.payment && this.state.procuredproduct && this.state.billno && this.state.sellerconfirm){
+  this.setState({ isOpen: ! this.state.isOpen });
+  }
+  else{
+    alert('fill all details')
+  }
 
+}
 
 handlepost=()=>{
 
@@ -359,16 +367,9 @@ this.setState({
   payment:'',
   isOpen: false
 
-
 })
-
 })
-
-
 }
-
-
-
 
  
   render() {
@@ -473,10 +474,21 @@ this.setState({
     {this.state.sellerconfirm.length>0?(
       <div>
       <Row>
-      <Col>
-    <h5>SELLER NAME: {this.state.sellerconfirm}</h5>
+        <Col xs="auto">
+      <Label for="sellername">SELLER NAME</Label>
+        </Col>
+      </Row>
+      <Row>
+      <Col xs="auto">
+      
+     <Input id="sellername" value={this.state.sellerconfirm}/>  
     </Col>
+   
+    <DeleteIcon  onClick={()=>this.setState({sellerconfirm:''})}></DeleteIcon>
+    
     </Row>
+
+<br></br>
     <Row>
       <Col xs="auto">
         <FormGroup>
@@ -696,50 +708,101 @@ this.setState({
             <h4>ADDITIONAL COST: {this.state.additionalcost}</h4>
           </Row>
       
-          <Row>
-            
           
-          <Col
-          className="d-flex align-items-center justify-content-center" >
-          <Button color="success" onClick={this.openpost}>
-            CONFIRM
-          </Button>
-          </Col>
-        </Row>
+
+          <Row>
+            <Col
+            className="d-flex align-items-center justify-content-center" >
+            <Button color="success" onClick={this.openpost}>
+              CONFIRM
+            </Button>
+            </Col>
+          </Row>
+         
 
         <Modal isOpen={this.state.isOpen} toggle={this.openpost}>
           <ModalHeader toggle={this.openpost}>
             CONFIRM PROCUREMENT
           </ModalHeader>
           <ModalBody>
-            <div>
-              <h5>Billno:{this.state.billno}</h5>
-              <h5>Billdate:{this.state.billdate}</h5>
-              <h5>Status:{this.state.payment}</h5>
-              <h5>AdditionalCost:{this.state.additionalcost}</h5>
-              <h5>Procuredproducts:{this.state.procuredproduct.map((i,index)=>{
-              if(index>0){
-              return(
-               
-                <h5>
+
+            
+              <Table>
+              <thead>
+                <tr>
                   
-                  <h6>{index}:(</h6>
-                <h6>ProductgroupId: {i.productgroupId}</h6>
-                <h6>Productcost: {i.prodcost}</h6>
-                <h6>Priceperunit: {i.priceperunit}</h6>
-                <h6>Totalunits: {i.totalunits}</h6>
-                <h6>Quantityperunit: {i.quantityperunit}</h6>
-                <h6>Measurementunit: {i.measurementunit}</h6>
-                <h6>),</h6>
-                </h5>
-                )
-              }
-            }
+                <th>SELLER</th>
+               
+                <th>BILL NUMBER</th>
+                <th>BILL DATE</th>
+                
+                  <th>PAYMENT STATUS</th>
+                  
+                  <th>ADDITIONAL COST</th>
+                  </tr>
+                </thead>
+                <tbody>
+             
+                <td>{this.state.sellerconfirm}</td>
+                <td>{this.state.billno}</td>
+              <td>{this.state.billdate}</td>
+              <td>{this.state.payment}</td>
+              <td>{this.state.additionalcost}</td>
               
-              )}
-            </h5>
-              <h5>Seller Name:{this.state.sellerconfirm}</h5>
-            </div>
+              
+
+              </tbody>
+              </Table>
+              <Table responsive >
+            <thead>
+            <tr>
+              <th>SNo</th>
+              
+             <th>PRODUCT GROUPID</th>
+             <th>PRODUCT COST</th>
+             
+              <th>PRICE PER UNIT</th>
+              <th>TOTAL UNITS</th>
+              
+              <th>QUANTITY PERUNIT</th>
+              <th>MEASUREMENT UNIT</th>
+            </tr>
+            </thead>
+            <tbody>
+           { this.state.procuredproduct.map((i,index)=>{
+              
+            
+          if(i.productgroupId ){
+ 
+            return (
+
+            <tr>
+    
+        <td>{index}</td>
+        <td>{i.productgroupId}</td>
+        <td>{i.prodcost}</td>
+        <td>{i.priceperunit}</td>
+        <td>{i.totalunits}</td>
+
+        <td>{i.quantityperunit}</td>
+        <td>{i.measurementunit}</td>
+       
+
+        </tr>
+            )
+           }
+          })
+        }
+
+        
+            </tbody>
+        
+        
+            </Table>
+            
+            <center><h6>Total={parseInt(this.state.totalcost)+parseInt(this.state.additionalcost)}</h6></center>
+        
+
           
           </ModalBody>
           <ModalFooter>
