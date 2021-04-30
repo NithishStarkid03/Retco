@@ -1,0 +1,100 @@
+{
+  "fullsellerdetail": [
+    {
+      "name": "Mounish",
+      "gst": "SELL1212",
+      "email": "elimugimounish@gmail.com",
+      "phone": "9008002280",
+      "address": {
+        "addressLine1": "123-A",
+        "addressLine2": "Kuttralam Theru",
+        "addressLine3": "Tenkasi",
+        "city": "Tirunelveli",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "pin": "612345"
+      },
+      "id": 2
+    },
+    {
+      "name": "Divyan",
+      "gst": "SELL2604",
+      "email": "nickasterberry@gmail.com",
+      "phone": "7200802280",
+      "address": {
+        "addressLine1": "130-c",
+        "addressLine2": "Arasu street",
+        "addressLine3": "PCPatti",
+        "city": "Theni",
+        "state": "Tamilnadu",
+        "country": "India",
+        "pin": "625533"
+      },
+      "id": 5
+    },
+    {
+      "name": "RanjthT",
+      "gst": "SELL1223",
+      "email": "admin@gmail.com",
+      "phone": "09898786754",
+      "address": {
+        "addressLine1": "1C",
+        "addressLine2": "Arasu street",
+        "addressLine3": "Papanayakampalayam",
+        "city": "Theni",
+        "state": "Tamilnadu",
+        "country": "India",
+        "pin": "625531"
+      },
+      "id": 6
+    },
+    {
+      "name": "RanjthDon",
+      "gst": "SELL1223",
+      "email": "admin@gmail.com",
+      "phone": "09898786754",
+      "address": {
+        "addressLine1": "1C",
+        "addressLine2": "Arasu street",
+        "addressLine3": "Papanayakampalayam",
+        "city": "Theni",
+        "state": "Tamilnadu",
+        "country": "India",
+        "pin": "625541"
+      },
+      "id": 7
+    },
+    {
+      "name": "RanjthThangam",
+      "gst": "SELL1223",
+      "email": "admin@gmail.com",
+      "phone": "09898786754",
+      "address": {
+        "addressLine1": "1234C",
+        "addressLine2": "Arasu street",
+        "addressLine3": "Papanayakampalayam",
+        "city": "Theni",
+        "state": "Tamilnadu",
+        "country": "India",
+        "pin": "625531"
+      },
+      "id": 8
+    },
+    {
+      "name": "MuthuPandi",
+      "gst": "SELL1221",
+      "email": "admin@gmail.com",
+      "phone": "7890674531",
+      "address": {
+        "addressLine1": "98-V",
+        "addressLine2": "Kaliyaman Theru",
+        "addressLine3": "Kalavasal",
+        "city": "Madurai",
+        "state": "Tamilnadu",
+        "country": "India",
+        "pin": "624432"
+      },
+      "id": 9
+    }
+  ]
+}

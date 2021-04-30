@@ -1,0 +1,17 @@
+{
+    "product":[
+        {
+            "productgroupId":1,
+            "productgroupName":"Ponni"
+
+        },
+        {
+            "productgroupId":2,
+            "productgroupName":"Thoor Dal"
+
+        }
+        
+
+    ]
+
+}
