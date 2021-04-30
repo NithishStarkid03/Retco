@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button,Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Table} from 'reactstrap';
-
+import axios from 'axios'
 
 class Editmodal extends Component {
     
@@ -10,10 +10,11 @@ class Editmodal extends Component {
         this.state = {
             productgroupId: '',
             prodcost: '',
-            priceperunitquantity:'',
+            priceperunit:'',
             totalunits:'',
             measurementunit:'',
             quantityperunit:'',
+            productdet:[]
 
         }
        
@@ -27,14 +28,18 @@ class Editmodal extends Component {
         this.setState({
             productgroupId: nextProps.productgroupId,
             prodcost: nextProps.prodcost,
-            priceperunitquantity:nextProps.priceperunitquantity,
+            priceperunit:nextProps.priceperunit,
             totalunits:nextProps.totalunits,
             measurementunit:nextProps.measurementunit,
-            quantityperunit:nextProps.quantityperunit
+            quantityperunit:nextProps.quantityperunit,
+            productdet:nextProps.productdet,
 
         })
+        console.log('edit',this.state.productdet)
+        
     }
 
+    
 
     handleSave() {
         const item = this.state;
@@ -45,9 +50,9 @@ class Editmodal extends Component {
 
     render() {
         return (
-        <div className="modal" id="editmodal" tabIndex="-1" role="dialog">
+        <div className="modal" id="editmodal" >
         
-        <div className="modal-dialog" role="document">
+        <div className="modal-dialog" >
                     <div className="modal-content">
                         <div className="modal-header">
                         <h5 className="modal-title" id="editmodal">Edit</h5>
@@ -56,10 +61,28 @@ class Editmodal extends Component {
         <div className="modal-body">
         <FormGroup>
             <Label for="productgroupId">PRODUCT GROUPID</Label>
-            <Input id="productgroupid" value={this.state.productgroupId} onChange={(e) => {
+            <Input list="productgroupId"  placeholder={this.state.productgroupId} onChange={(e) => {
             
               this.setState({ productgroupId: e.target.value});
             }} />
+            <datalist id="productgroupId">
+              {
+                
+                  this.state.productdet.map(result=>
+                    {
+                      
+                      return(
+                        <option>
+                        {result.productgroupName}</option>
+                      )
+                    }
+                    
+                    )
+                
+              }
+
+            </datalist>
+
           </FormGroup>
           <FormGroup>
             <Label for="productcost">PRODUCT COST</Label>
@@ -69,10 +92,10 @@ class Editmodal extends Component {
             }} />
           </FormGroup>
           <FormGroup>
-            <Label for="priceperunitquantity">PRICEPER UNIT QUANTITY</Label>
-            <Input id="priceperunitquantity" value={this.state.priceperunitquantity} onChange={(e) => {
+            <Label for="priceperunitquantity">PRICE PER UNIT</Label>
+            <Input id="priceperunitquantity" value={this.state.priceperunit} onChange={(e) => {
               
-              this.setState({ priceperunitquantity:e.target.value });
+              this.setState({ priceperunit:e.target.value });
             }} />
           </FormGroup>
 

@@ -32,6 +32,11 @@ export const SidebarData = [
         path: "/master/productmaster",
         icon: <IoIcons.IoIosPaper />,
       },
+      {
+        title: "AddSeller",
+        path: "/master/addseller",
+        icon: <IoIcons.IoIosPaper />,
+      },
     ],
   },
   {

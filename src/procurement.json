@@ -1,18 +1,22 @@
 {
-  "procurement_post": [
+  "proc": [
     {
-      "additionalcost": "4000",
-      "status": "PURCHASED",
-      "procuredproduct": [
+      "bill_no": "1",
+      "bill_date": "2021-04-30",
+      "additionalcost": "2000",
+      "status": "PARTIAL_PAID",
+      "addProcuredProductList": [
         {
-          "priceperunitquantity": "40",
-          "totalunits": "25",
+          "priceperunit": "10",
+          "totalunits": "100",
           "measurementunit": "KILOGRAM",
-          "quantityperunit": "10",
-          "productgroupId": "2"
+          "quantityperunit": "20",
+          "productgroupId": "Ponni",
+          "prodcost": "200"
         }
       ],
-      "sellerid": "4"
+      "sellerId": "Ranjith",
+      "id": 1
     }
   ]
 }

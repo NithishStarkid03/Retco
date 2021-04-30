@@ -2,13 +2,14 @@ import axios from 'axios';
 import React, { Component } from 'react'
 import { Button,ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Container, Row, Col,Form } from 'reactstrap';
-import Purchaseentrydetails from './Purchaseentrydetails';
+
 import { Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Table} from 'reactstrap';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Editmodal from './Editmodal';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Link } from "react-router-dom";
 
 class Purchaseentry extends Component {
   
@@ -25,13 +26,15 @@ class Purchaseentry extends Component {
       sellerdet:[],
       handleseller:'',
       sellerconfirm:'',
-
+      productdet:[],
+      
 
       additionalcost:'',
       billno:'',
+      billdate:'',
       procuredproduct:[
       {
-      priceperunitquantity: '',
+      priceperunit: '',
       totalunits: '',
       measurementunit: '',
       quantityperunit: '',
@@ -42,7 +45,7 @@ class Purchaseentry extends Component {
     
   ],    
 
-      newpriceperunitquantity:'',
+      newpriceperunit:'',
       newtotalunits: '',
       newmeasurementunit: '',
       newquantityperunit: '',
@@ -52,8 +55,9 @@ class Purchaseentry extends Component {
       addprocmodal:false,
       totalcost:0,
       requiredItem: 0,
-  error:null
-    
+      payment:'',
+      isOpen: false,
+      promptnewseller:0
 
 
 }
@@ -69,7 +73,13 @@ class Purchaseentry extends Component {
 
   async componentDidMount(){
     this.getseller();
+    this.getproduct();
+    
+   
 }
+
+  
+
 
   toggle(){ 
     this.setState({
@@ -78,7 +88,7 @@ class Purchaseentry extends Component {
   }
 
   getseller(){
-    axios.get('http://localhost:3000/seller').then((res)=>{
+    axios.get('http://localhost:3001/seller').then((res)=>{
 
     console.log(res.data)
 
@@ -88,16 +98,73 @@ class Purchaseentry extends Component {
     });
 
     })
+    
   }
 
-  handleselect=(event)=>{
-    console.log(event.target.value);
-    
+  getproduct(){
+    axios.get('http://localhost:8001/product').then((res)=>{
+
+    console.log(res.data)
 
     this.setState({
-      handleseller:event.target.value
+      productdet:res.data,
+
     });
+
+    })
+    
   }
+
+
+
+  handleselectseller=(event)=>{
+    console.log(event.target.value);
+    
+    let f=0
+    if(!event.target.value){
+       f=1
+    }
+    
+    let chk=event.target.value
+
+    this.state.sellerdet.map((s)=>{
+
+      if(s.name.toLowerCase().includes(chk.toLowerCase())){
+
+              f=1
+              this.setState({
+                handleseller:event.target.value
+                
+              }); 
+          
+          } 
+          
+          
+        }
+       
+      
+
+    )
+
+
+    if(f===0){
+      console.log('ila',this.state.handleseller)
+      this.setState({
+        promptnewseller:1
+      })
+      
+      
+    }
+    else{
+      this.setState({
+        promptnewseller:0
+      })
+        
+    }
+  
+  }
+
+
 
   sendseller=event=>{
     event.preventDefault();
@@ -106,6 +173,12 @@ class Purchaseentry extends Component {
       sellerconfirm:sellerid
     })
   }
+
+
+
+
+
+
 
   toggleaddprocModal(){
 
@@ -124,7 +197,7 @@ addproc(){
     procuredproduct:[
       ...this.state.procuredproduct,
       {
-        priceperunitquantity:this.state.newpriceperunitquantity,
+        priceperunit:this.state.newpriceperunit,
         totalunits: this.state.newtotalunits,
         measurementunit: this.state.newmeasurementunit,
         quantityperunit: this.state.newquantityperunit,
@@ -138,7 +211,7 @@ addproc(){
   })
   console.log(this.state.billno)
   
-  console.log(parseInt(this.state.newprodcost))
+
   console.log(this.state.procuredproduct)
   
  
@@ -166,7 +239,7 @@ deleteattribute(id){
   
   let tempdel = this.state.procuredproduct;
     tempdel.splice(id, 1);
-    this.setState({ procuredproduct: tempdel });
+    this.setState({ procuredproduct: tempdel,requiredItem:0 });
     console.log(this.state.procuredproduct)
 
 
@@ -196,13 +269,102 @@ replaceModalItem(index) {
 
 
 saveModalDetails(item) {
+  
   const requiredItem = this.state.requiredItem;
   let tempprocured = this.state.procuredproduct;
+  let preval=this.state.procuredproduct[requiredItem].prodcost
   tempprocured[requiredItem] = item;
   
+  
+  console.log(preval)
   this.setState({ procuredproduct: tempprocured });
+  console.log(this.state.totalcost)
+
+  let chk=0
+  let costup=this.state.procuredproduct.map((i,index)=>{
+    if(i.productgroupId){
+      if(index==requiredItem){
+    
+        chk=Math.abs((this.state.totalcost+parseInt(i.prodcost))-preval)
+
+    this.setState(
+      {
+          totalcost:chk   
+      }
+    )
+  }
+    }
+  })
 
   console.log(this.state.procuredproduct)
+}
+
+
+openpost = () => this.setState({ isOpen: ! this.state.isOpen });
+
+
+handlepost=()=>{
+
+const procurement={
+
+  bill_no:this.state.billno,
+  bill_date:this.state.billdate,
+  additionalcost:this.state.additionalcost,
+  status:this.state.payment,
+  addProcuredProductList:this.state.procuredproduct.filter((item,index)=>index>0),
+  sellerId:this.state.sellerconfirm
+
+}
+
+axios.post('http://localhost:8002/proc',procurement).then((response)=>{
+
+  console.log(response)
+
+  
+this.setState({
+  dropdownopen:false,
+  sellerdet:[],
+  handleseller:'',
+  sellerconfirm:'',
+ 
+ 
+
+
+  additionalcost:'',
+  billno:'',
+  billdate:'',
+  procuredproduct:[
+  {
+  priceperunit: '',
+  totalunits: '',
+  measurementunit: '',
+  quantityperunit: '',
+  productgroupId: '',
+  prodcost:''
+},
+
+
+],    
+
+  newpriceperunit:'',
+  newtotalunits: '',
+  newmeasurementunit: '',
+  newquantityperunit: '',
+  newproductgroupId: '',
+  
+  newprodcost:'',
+  addprocmodal:false,
+  totalcost:0,
+  requiredItem: 0,
+  payment:'',
+  isOpen: false
+
+
+})
+
+})
+
+
 }
 
 
@@ -230,13 +392,14 @@ saveModalDetails(item) {
           
               <td>{i.productgroupId}</td>
               <td>{i.prodcost}</td>
-              <td>{i.priceperunitquantity}</td>
+              <td>{i.priceperunit}</td>
               <td>{i.totalunits}</td>
    
               <td>{i.quantityperunit}</td>
               <td>{i.measurementunit}</td>
               
               <td>
+
               <EditIcon data-toggle="modal" data-target="#editmodal" onClick={()=>this.replaceModalItem(index)}></EditIcon>
               
               </td>
@@ -267,7 +430,6 @@ saveModalDetails(item) {
 
 
 
-
   return(
 
     <Container>
@@ -279,10 +441,11 @@ saveModalDetails(item) {
     <Col xs="auto">
     <ButtonDropdown isOpen={this.state.dropdownopen} toggle={this.toggle.bind(this)} >
      <DropdownToggle caret color="primary">
-     SELECT VENDOR
+     SELECT SELLER
     </DropdownToggle>
     <DropdownMenu>
-    <input type="text" list='seller' placeholder="Search" onSelect={this.handleselect}></input>
+    <input type="text" list='seller' placeholder="Search" onSelect={this.handleselectseller}></input>
+    
     <datalist id="seller" >
     {sellerdet}
     </datalist>
@@ -294,12 +457,29 @@ saveModalDetails(item) {
     <Button color="success" size="md" className="mr-2" >SELECT</Button>
     </Col>
 
+    {this.state.promptnewseller===1?(<Col >
+    <Link to="/master/addseller">
+    <Button color="primary" onClick={()=>this.setState({promptnewseller:0})}>ADD NEW SELLER</Button>
+    </Link>
+    </Col>
+    ):(<></>)
+    }
+    
     </Row>
     </Form>
+    <br></br>
     
-    <h3>SELLER NAME: {this.state.sellerconfirm}</h3>
-
-    <FormGroup>
+    
+    {this.state.sellerconfirm.length>0?(
+      <div>
+      <Row>
+      <Col>
+    <h5>SELLER NAME: {this.state.sellerconfirm}</h5>
+    </Col>
+    </Row>
+    <Row>
+      <Col xs="auto">
+        <FormGroup>
       
             <Label for="billno">BILL NO</Label>
             <Row>
@@ -311,17 +491,37 @@ saveModalDetails(item) {
               this.setState({ billno:this.state.billno });
             }} />
             </Col>
-            <EditIcon onClick={(e)=>this.setState({billno:e.target.value})}/>
             <DeleteIcon  onClick={() => this.setState({billno:''})}></DeleteIcon>
           
             </Row>
           </FormGroup>
-         
- 
+         </Col>
+         <Col>
+        <FormGroup>
+      
+            <Label for="billdate">BILL DATE</Label>
+            <Row>
+              <Col xs='auto'>
+            <Input id="billdate"  type="date" value={this.state.billdate} onChange={(e) => {
+              
+              this.state.billdate = e.target.value;
+
+              this.setState({ billdate:this.state.billdate });
+            }} />
+            </Col>
+            <DeleteIcon  onClick={() => this.setState({billdate:''})}></DeleteIcon>
+          
+            </Row>
+          </FormGroup>
+         </Col>
+
+
+    </Row>
     
-    
-    {this.state.sellerconfirm.length>0?(
+      
     <Button className="my-3" color="primary" onClick={this.toggleaddprocModal.bind(this)}>Add Product</Button>
+    <h5>BILL NO:{this.state.billno}</h5>
+    </div>
     ):(
       <h1></h1>
     )}
@@ -332,13 +532,30 @@ saveModalDetails(item) {
         <ModalHeader toggle={this.toggleaddprocModal.bind(this)}>Add</ModalHeader>
         <ModalBody>
         
-        <FormGroup>
+        <FormGroup >
+           
             <Label for="productgroupId">PRODUCT GROUPID</Label>
-            <Input id="productgroupid" required  onChange={(e) => {
+           
             
-              this.setState({ newproductgroupId: e.target.value});
-            }} />
+          <Input list="productgroupId" type="text" placeholder="search"  onChange={(e) => {
+            
+            this.setState({ newproductgroupId: e.target.value});
+          }} />
+          <datalist id="productgroupId">
+            {
+              this.state.productdet.map(result=>
+                {
+                  return(
+                    <option>{result.productgroupName}</option>
+                  )
+                }
+                
+                )
+            }
+
+          </datalist>
           </FormGroup>
+        
           <FormGroup>
             <Label for="productcost">PRODUCT COST</Label>
             <Input id="productcost" required  onChange={(e) => {
@@ -347,10 +564,10 @@ saveModalDetails(item) {
             }} />
           </FormGroup>
           <FormGroup>
-            <Label for="priceperunitquantity">PRICEPERQUANTITY</Label>
-            <Input id="priceperunitquantity" required  onChange={(e) => {
+            <Label for="priceperunit">PRICE PER UNIT</Label>
+            <Input id="priceperunit" required  onChange={(e) => {
               
-              this.setState({ newpriceperunitquantity:e.target.value });
+              this.setState({ newpriceperunit:e.target.value });
             }} />
           </FormGroup>
 
@@ -398,7 +615,7 @@ saveModalDetails(item) {
 
 
         
-            <h3>BILL NO:{this.state.billno}</h3>
+           
      
             <Table >
             <thead>
@@ -407,7 +624,7 @@ saveModalDetails(item) {
              <th>PRODUCT GROUPID</th>
              <th>PRODUCT COST</th>
              
-              <th>PRICE PER QUANTITY</th>
+              <th>PRICE PER UNIT</th>
               <th>TOTAL UNITS</th>
               
               <th>QUANTITY PERUNIT</th>
@@ -423,16 +640,42 @@ saveModalDetails(item) {
             <Editmodal
             productgroupId={modalData.productgroupId}
           prodcost={modalData.prodcost}
-          priceperunitquantity={modalData.priceperunitquantity}
+          priceperunit={modalData.priceperunit}
           totalunits={modalData.totalunits}
           measurementunit={modalData.measurementunit}
           quantityperunit={modalData.quantityperunit}
+          productdet={this.state.productdet}
           saveModalDetails={this.saveModalDetails}
         />
 
 
               
-            <h3><center>TOTAL COST:{this.state.totalcost}</center></h3>
+            <h4><center>TOTAL COST:{this.state.totalcost}</center></h4>
+            
+
+
+            <FormGroup>
+            <Label for="payment">PAYMENT STATUS</Label>
+            <Row>
+            <Col xs='auto'>
+            <select name="payment" value={this.state.payment} id="payment" onChange={(e)=>{this.setState({payment:e.target.value})}}>
+            <option value="empty">...</option>
+
+            <option value="PAID">PAID</option>
+
+            <option value="PARTIAL_PAID">PARTIAL PAID</option>
+            <option value="UNPAID">UNPAID</option>
+            
+            </select>
+
+            
+            </Col>
+            <DeleteIcon  onClick={() => this.setState({payment:''})}>Delete</DeleteIcon>
+            
+            </Row>
+            <h4>{this.state.payment}</h4>
+            </FormGroup>
+            
             <FormGroup>
             <Label for="addcost">ADDITIONAL COST</Label>
             <Row>
@@ -445,16 +688,71 @@ saveModalDetails(item) {
               this.setState({ additionalcost:this.state.additionalcost });
             }} />
             </Col>
-           <EditIcon onClick={(e)=> this.setState({additionalcost:e.target.value})} />
             <DeleteIcon  onClick={() => this.setState({additionalcost:''})}>Delete</DeleteIcon>
             
             </Row>
             </FormGroup>
-          
-            <h3>ADDITIONAL COST: {this.state.additionalcost}</h3>
+          <Row>
+            <h4>ADDITIONAL COST: {this.state.additionalcost}</h4>
+          </Row>
       
+          <Row>
             
-      
+          
+          <Col
+          className="d-flex align-items-center justify-content-center" >
+          <Button color="success" onClick={this.openpost}>
+            CONFIRM
+          </Button>
+          </Col>
+        </Row>
+
+        <Modal isOpen={this.state.isOpen} toggle={this.openpost}>
+          <ModalHeader toggle={this.openpost}>
+            CONFIRM PROCUREMENT
+          </ModalHeader>
+          <ModalBody>
+            <div>
+              <h5>Billno:{this.state.billno}</h5>
+              <h5>Billdate:{this.state.billdate}</h5>
+              <h5>Status:{this.state.payment}</h5>
+              <h5>AdditionalCost:{this.state.additionalcost}</h5>
+              <h5>Procuredproducts:{this.state.procuredproduct.map((i,index)=>{
+              if(index>0){
+              return(
+               
+                <h5>
+                  
+                  <h6>{index}:(</h6>
+                <h6>ProductgroupId: {i.productgroupId}</h6>
+                <h6>Productcost: {i.prodcost}</h6>
+                <h6>Priceperunit: {i.priceperunit}</h6>
+                <h6>Totalunits: {i.totalunits}</h6>
+                <h6>Quantityperunit: {i.quantityperunit}</h6>
+                <h6>Measurementunit: {i.measurementunit}</h6>
+                <h6>),</h6>
+                </h5>
+                )
+              }
+            }
+              
+              )}
+            </h5>
+              <h5>Seller Name:{this.state.sellerconfirm}</h5>
+            </div>
+          
+          </ModalBody>
+          <ModalFooter>
+          <Button color="success" onClick={this.handlepost}>
+              CONFIRM
+            </Button>
+            <Button color="danger" onClick={this.openpost}>
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
+
+
 
     </div>
 

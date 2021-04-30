@@ -25,6 +25,7 @@ import Addproduct from './Pages/Master/Addproduct';
 import Customer from './Pages/Master/Customer';
 import Pricing from './Pages/Master/Pricing';
 import ProductMaster from './Pages/Master/Productmaster';
+import Addseller from './Pages/Master/Addseller';
 
 import Orderstatus from './Pages/Distribution/Orderstatus';
 import Orders from './Pages/Distribution/Orders';
@@ -49,6 +50,8 @@ function Tabs() {
                 <Route path="/master/customer" exact component={Customer} />
                 <Route path="/master/pricing" exact component={Pricing} />
                 <Route path="/master/productmaster" exact component={ProductMaster} />
+                <Route path="/master/addseller" exact component={Addseller} />
+                
 
           <Route path="/distribution" exact component={Distributiontab} />
 
