@@ -1,0 +1,23 @@
+{
+    "procuredproducts": [
+    {
+        "batchCode": "PON100",
+        "totalUnits": 100,
+        "measurementUnit": "KILOGRAM",
+        "quantityPerUnit": 75.0,
+        "costPerUnit": 1225.45,  
+        "productGroupId": 5,
+        "productGroupName": "Ponni"
+    },
+    {
+        "batchCode": "THR100",
+        "totalUnits": 100,
+        "measurementUnit": "KILOGRAM",
+        "quantityPerUnit": 75.0,
+        "costPerUnit": 1225.45,
+        "productGroupId": 5,
+        "productGroupName": "Ponni"
+    }
+]
+
+}

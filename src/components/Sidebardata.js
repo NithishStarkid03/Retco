@@ -59,12 +59,7 @@ export const SidebarData = [
         icon: <IoIcons.IoIosPaper />,
         cName: "sub-nav",
       },
-      {
-        title: "BatchCode",
-        path: "/procurement/batchcode",
-        icon: <IoIcons.IoIosPaper />,
-        cName: "sub-nav",
-      },
+     
     ],
   },
  

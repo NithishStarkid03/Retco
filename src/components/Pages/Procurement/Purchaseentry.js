@@ -10,6 +10,7 @@ import Editmodal from './Editmodal';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link } from "react-router-dom";
+import Modalchild from './Barcode';
 
 class Purchaseentry extends Component {
   
@@ -58,7 +59,9 @@ class Purchaseentry extends Component {
       payment:'',
       isOpen: false,
       promptnewseller:0,
-      confirmpostflag:0
+      confirmpostflag:0,
+      barcodedet:[],
+      barcodeflag:false
 
 
 }
@@ -76,7 +79,6 @@ class Purchaseentry extends Component {
     this.getseller();
     this.getproduct();
     
-   
 }
 
   
@@ -114,7 +116,6 @@ class Purchaseentry extends Component {
     })
     
   }
-
 
 
   handleselectseller=(event)=>{
@@ -312,6 +313,23 @@ openpost = () =>
 }
 
 handlepost=()=>{
+  axios.get('http://localhost:8003/procuredproducts').then((res)=>{
+
+      console.log(res.data)
+  
+      this.setState({
+        barcodedet:res.data,
+        barcodeflag:true
+  
+      });
+  
+      })
+      
+
+
+ console.log('bathcodedet:',this.state.barcodedet,'flag',this.state.barcodeflag)
+
+  
 
 const procurement={
 
@@ -326,8 +344,8 @@ const procurement={
 
 axios.post('http://localhost:8002/proc',procurement).then((response)=>{
 
-  console.log(response)
-
+  console.log(response);
+  
   
 this.setState({
   dropdownopen:false,
@@ -365,9 +383,11 @@ this.setState({
   totalcost:0,
   requiredItem: 0,
   payment:'',
-  isOpen: false
+  isOpen: false,
+  barcodeflag:false
 
-})
+},)
+
 })
 }
 
@@ -806,15 +826,18 @@ this.setState({
           
           </ModalBody>
           <ModalFooter>
+          
           <Button color="success" onClick={this.handlepost}>
               CONFIRM
             </Button>
+            
             <Button color="danger" onClick={this.openpost}>
               Close
             </Button>
           </ModalFooter>
         </Modal>
-
+        
+        <Modalchild barcodedet={this.state.barcodedet} flag={this.state.barcodeflag}/>
 
 
     </div>

@@ -19,7 +19,7 @@ import Inventorydispatch from './Pages/Packing/Inventorydispatch';
 
 import Purchaseentry from './Pages/Procurement/Purchaseentry';
 import Payments from './Pages/Procurement/Payments';
-import Batchcode from './Pages/Procurement/Batchcode';
+
 
 import Addproduct from './Pages/Master/Addproduct';
 import Customer from './Pages/Master/Customer';
@@ -63,7 +63,7 @@ function Tabs() {
 
                 <Route path="/procurement/purchaseentry" exact component={Purchaseentry} />
                 <Route path="/procurement/payments" exact component={Payments} />
-                <Route path="/procurement/batchcode" exact component={Batchcode} />
+               
                 
 
 
