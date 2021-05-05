@@ -2,53 +2,53 @@
   "proc": [
     {
       "bill_no": "1",
-      "bill_date": "2021-04-30",
-      "additionalcost": "2000",
-      "status": "PARTIAL_PAID",
+      "bill_date": "2021-05-04",
+      "additionalcost": "0",
+      "status": "PAID",
       "addProcuredProductList": [
         {
-          "priceperunit": "10",
-          "totalunits": "100",
+          "priceperunit": 10,
+          "totalunits": 100,
           "measurementunit": "KILOGRAM",
-          "quantityperunit": "20",
+          "quantityperunit": "10",
           "productgroupId": "Ponni",
-          "prodcost": "200"
+          "tax": 10
         }
       ],
       "sellerId": "Ranjith",
       "id": 1
     },
     {
-      "bill_no": "10",
-      "bill_date": "2021-05-01",
-      "additionalcost": "200",
-      "status": "UNPAID",
+      "bill_no": "1",
+      "bill_date": "2021-05-04",
+      "additionalcost": "0",
+      "status": "PAID",
       "addProcuredProductList": [
         {
-          "priceperunit": "100",
-          "totalunits": "20",
+          "priceperunit": 10,
+          "totalunits": 100,
           "measurementunit": "KILOGRAM",
           "quantityperunit": "10",
-          "productgroupId": "Ponni",
-          "prodcost": "2000"
+          "productgroupId": "Thoor Dal",
+          "tax": 10
         }
       ],
       "sellerId": "Ranjith",
       "id": 2
     },
     {
-      "bill_no": "26",
-      "bill_date": "2021-05-02",
-      "additionalcost": "200",
-      "status": "PAID",
+      "bill_no": "1",
+      "bill_date": "2021-05-04",
+      "additionalcost": "0",
+      "status": "PARTIAL_PAID",
       "addProcuredProductList": [
         {
-          "priceperunit": "100",
-          "totalunits": "20",
-          "measurementunit": "KILOGRAM",
+          "priceperunit": 10,
+          "totalunits": 10,
+          "measurementunit": "LITRE",
           "quantityperunit": "10",
           "productgroupId": "Thoor Dal",
-          "prodcost": "2000"
+          "tax": 1
         }
       ],
       "sellerId": "Ranjith",
@@ -56,29 +56,135 @@
     },
     {
       "bill_no": "1",
-      "bill_date": "2021-05-02",
-      "additionalcost": "200",
+      "bill_date": "2021-05-04",
+      "additionalcost": "0",
       "status": "PAID",
       "addProcuredProductList": [
         {
-          "priceperunit": "10",
-          "totalunits": "20",
-          "measurementunit": "LITRES",
-          "quantityperunit": "5",
-          "productgroupId": "Ponni",
-          "prodcost": "200"
-        },
-        {
-          "priceperunit": "200",
-          "totalunits": "10",
-          "measurementunit": "KILOGRAM",
+          "priceperunit": 10,
+          "totalunits": 100,
+          "measurementunit": "LITRE",
           "quantityperunit": "10",
           "productgroupId": "Thoor Dal",
-          "prodcost": "2000"
+          "tax": 120
         }
       ],
       "sellerId": "Ranjith",
       "id": 4
+    },
+    {
+      "bill_no": "2",
+      "bill_date": "2021-05-04",
+      "additionalcost": "200",
+      "status": "PAID",
+      "addProcuredProductList": [
+        {
+          "priceperunit": 10,
+          "totalunits": 25,
+          "measurementunit": "UNIT",
+          "quantityperunit": "10",
+          "productgroupId": "Ponni",
+          "tax": 25
+        },
+        {
+          "priceperunit": 10,
+          "totalunits": 50,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "5",
+          "productgroupId": "Thoor Dal",
+          "tax": 50
+        }
+      ],
+      "sellerId": "Mounish",
+      "id": 5
+    },
+    {
+      "bill_no": "1",
+      "bill_date": "2021-05-04",
+      "additionalcost": 200,
+      "status": "PAID",
+      "addProcuredProductList": [
+        {
+          "priceperunit": 10,
+          "totalunits": 100,
+          "measurementunit": "LITRE",
+          "quantityperunit": "10",
+          "productgroupId": "Ponni",
+          "tax": 10
+        },
+        {
+          "priceperunit": 10,
+          "totalunits": 25,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10",
+          "productgroupId": "Thoor Dal",
+          "tax": 25
+        }
+      ],
+      "sellerId": "Ranjith",
+      "id": 6
+    },
+    {
+      "bill_no": "10",
+      "bill_date": "2021-05-04",
+      "additionalcost": 10,
+      "status": "PAID",
+      "addProcuredProductList": [
+        {
+          "productgroupId": "Ponni",
+          "tax": 25,
+          "priceperunit": 10,
+          "totalunits": 20,
+          "measurementunit": "LITRE",
+          "quantityperunit": "1"
+        },
+        {
+          "productgroupId": "Thoor Dal",
+          "tax": 50,
+          "priceperunit": 50,
+          "totalunits": 10,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "5"
+        }
+      ],
+      "sellerId": "Mounish",
+      "id": 7
+    },
+    {
+      "bill_no": "10",
+      "bill_date": "2021-05-04",
+      "additionalcost": 0,
+      "status": "UNPAID",
+      "addProcuredProductList": [
+        {
+          "productgroupId": "Ponni",
+          "tax": 2.5,
+          "priceperunit": 10,
+          "totalunits": 100,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10"
+        }
+      ],
+      "sellerId": "Ranjith",
+      "id": 8
+    },
+    {
+      "bill_no": "1",
+      "bill_date": "2021-05-04",
+      "additionalcost": 200,
+      "status": "PAID",
+      "addProcuredProductList": [
+        {
+          "productgroupId": "Ponni",
+          "tax": 2,
+          "priceperunit": 10,
+          "totalunits": 100,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "20"
+        }
+      ],
+      "sellerId": "Mounish",
+      "id": 9
     }
   ]
 }

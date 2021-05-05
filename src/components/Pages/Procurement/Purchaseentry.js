@@ -30,29 +30,30 @@ class Purchaseentry extends Component {
       productdet:[],
       
 
-      additionalcost:'',
+      additionalcost:0,
       billno:'',
       billdate:'',
       procuredproduct:[
       {
-      priceperunit: '',
-      totalunits: '',
+      priceperunit: 0,
+      totalunits: 0,
       measurementunit: '',
-      quantityperunit: '',
+      quantityperunit: 0,
       productgroupId: '',
-      prodcost:''
+      tax:0,
     },
 
     
   ],    
 
-      newpriceperunit:'',
-      newtotalunits: '',
+      newpriceperunit:0,
+      newtotalunits: 0,
       newmeasurementunit: '',
-      newquantityperunit: '',
+      newquantityperunit: 0,
       newproductgroupId: '',
-      
-      newprodcost:'',
+      ntax:0,
+      taxflag:0,
+
       addprocmodal:false,
       totalcost:0,
       requiredItem: 0,
@@ -203,12 +204,18 @@ addproc(){
         measurementunit: this.state.newmeasurementunit,
         quantityperunit: this.state.newquantityperunit,
         productgroupId: this.state.newproductgroupId,
-        prodcost:this.state.newprodcost
+        tax:this.state.ntax,
       }
 
     ],
-    addprocmodal:false,
-    totalcost:parseInt(this.state.totalcost)+parseInt(this.state.newprodcost),
+    newpriceperunit:0,
+    newtotalunits: 0,
+    newmeasurementunit: '',
+    addprocmodal:false, 
+    ntax:0,
+    taxflag:0,
+    taxin:false,
+    totalcost:(this.state.totalcost)+((this.state.newtotalunits*this.state.newpriceperunit)*(1+(this.state.ntax/100))),
   })
   console.log(this.state.billno)
   
@@ -226,7 +233,7 @@ deleteattribute(id){
     if(i.productgroupId){
       if(index==id){
     
-        chk=Math.abs(this.state.totalcost-parseInt(i.prodcost))
+        chk=Math.abs(this.state.totalcost-((i.totalunits*i.priceperunit)*(1+(i.tax/100))))
 
     this.setState(
       {
@@ -273,7 +280,7 @@ saveModalDetails(item) {
   
   const requiredItem = this.state.requiredItem;
   let tempprocured = this.state.procuredproduct;
-  let preval=this.state.procuredproduct[requiredItem].prodcost
+  let preval=(this.state.procuredproduct[requiredItem].totalunits*this.state.procuredproduct[requiredItem].priceperunit)*(1+(this.state.procuredproduct[requiredItem].tax/100))
   tempprocured[requiredItem] = item;
   
   
@@ -286,7 +293,7 @@ saveModalDetails(item) {
     if(i.productgroupId){
       if(index==requiredItem){
     
-        chk=Math.abs((this.state.totalcost+parseInt(i.prodcost))-preval)
+        chk=Math.abs((this.state.totalcost+((i.totalunits*i.priceperunit)*(1+(i.tax/100))))-preval)
 
     this.setState(
       {
@@ -303,7 +310,7 @@ saveModalDetails(item) {
 
 openpost = () => 
 {
-  if(this.state.additionalcost && this.state.payment && this.state.procuredproduct && this.state.billno && this.state.sellerconfirm){
+  if(this.state.additionalcost>=0 && this.state.payment && this.state.procuredproduct.length>0 && this.state.billno && this.state.sellerconfirm){
   this.setState({ isOpen: ! this.state.isOpen });
   }
   else{
@@ -319,7 +326,8 @@ handlepost=()=>{
   
       this.setState({
         barcodedet:res.data,
-        barcodeflag:true
+        barcodeflag:!this.state.barcodeflag
+       
   
       });
   
@@ -342,53 +350,89 @@ const procurement={
 
 }
 
+document.getElementById('addcost').value = ''
+
 axios.post('http://localhost:8002/proc',procurement).then((response)=>{
 
   console.log(response);
   
   
 this.setState({
-  dropdownopen:false,
-  sellerdet:[],
-  handleseller:'',
-  sellerconfirm:'',
- 
- 
-
-
-  additionalcost:'',
-  billno:'',
-  billdate:'',
-  procuredproduct:[
-  {
-  priceperunit: '',
-  totalunits: '',
-  measurementunit: '',
-  quantityperunit: '',
-  productgroupId: '',
-  prodcost:''
-},
-
-
-],    
-
-  newpriceperunit:'',
-  newtotalunits: '',
-  newmeasurementunit: '',
-  newquantityperunit: '',
-  newproductgroupId: '',
+         
   
-  newprodcost:'',
-  addprocmodal:false,
-  totalcost:0,
-  requiredItem: 0,
-  payment:'',
-  isOpen: false,
-  barcodeflag:false
-
-},)
-
+       
+        dropdownopen:false,
+        handleseller:'',
+        sellerconfirm:'',
+       
+       
+      
+      
+        additionalcost:0,
+        billno:'',
+        billdate:'',
+        procuredproduct:[
+        {
+        priceperunit: 0,
+        totalunits: 0,
+        measurementunit: '',
+        quantityperunit: 0,
+        productgroupId: '',
+        tax:0,
+      },
+      
+      
+      ],    
+      
+        newpriceperunit:0,
+        newtotalunits: 0,
+        newmeasurementunit: '',
+        newquantityperunit: 0,
+        newproductgroupId: '',
+        ntax:0,
+        addprocmodal:false,
+        totalcost:0,
+        requiredItem: 0,
+        payment:'',
+        isOpen: false,
+  
 })
+
+
+  
+ 
+  
+})
+}
+
+
+handlebarcodemodal=(barcodereturn)=>{
+  console.log('retuen',barcodereturn)
+  this.setState({
+    barcodeflag:barcodereturn
+  })
+
+}
+
+deltax(id){
+
+  if(id==='taxpercent'){
+    document.getElementById('taxpercent').value = ''
+    this.setState({taxflag:0,ntax:0})
+  }
+else{
+  document.getElementById('taxamt').value = ''
+  this.setState({taxflag:0,ntax:0})
+}
+}
+
+deleteadditionalcost(id){
+  document.getElementById(id).value = ''
+
+  this.setState({
+    additionalcost:0
+  })
+
 }
 
  
@@ -412,12 +456,14 @@ this.setState({
         <tr>
           
               <td>{i.productgroupId}</td>
-              <td>{i.prodcost}</td>
-              <td>{i.priceperunit}</td>
+              <td>Rs.{i.priceperunit}</td>
               <td>{i.totalunits}</td>
-   
-              <td>{i.quantityperunit}</td>
               <td>{i.measurementunit}</td>
+              <td>Rs.{i.totalunits*i.priceperunit}</td>
+              <td>{i.quantityperunit}</td>
+              <td>{i.tax}</td>
+            
+              <td>Rs.{(i.priceperunit*i.totalunits)*(1+(i.tax/100))}</td>
               
               <td>
 
@@ -566,7 +612,7 @@ this.setState({
         
         <FormGroup >
            
-            <Label for="productgroupId">PRODUCT GROUPID</Label>
+            <Label for="productgroupId">PRODUCT NAME</Label>
            
             
           <Input list="productgroupId" type="text" placeholder="search"  onChange={(e) => {
@@ -578,7 +624,7 @@ this.setState({
               this.state.productdet.map(result=>
                 {
                   return(
-                    <option>{result.productgroupName}</option>
+                    <option >{result.productgroupName}</option>
                   )
                 }
                 
@@ -588,18 +634,16 @@ this.setState({
           </datalist>
           </FormGroup>
         
+          
           <FormGroup>
-            <Label for="productcost">PRODUCT COST</Label>
-            <Input id="productcost" required  onChange={(e) => {
-            
-              this.setState({ newprodcost: e.target.value});
-            }} />
-          </FormGroup>
-          <FormGroup>
-            <Label for="priceperunit">PRICE PER UNIT</Label>
+            <Label for="priceperunit">COST PER UNIT</Label>
             <Input id="priceperunit" required  onChange={(e) => {
-              
-              this.setState({ newpriceperunit:e.target.value });
+               if((e.target.value)===''){
+                this.setState({ newpriceperunit:0})   
+               }
+              else{
+              this.setState({ newpriceperunit:parseFloat(e.target.value) });
+              }
             }} />
           </FormGroup>
 
@@ -607,15 +651,27 @@ this.setState({
             <Label for="totalunits">TOTAL UNITS</Label>
             <Input id="totalunits" required  onChange={(e) => {
 
-              this.setState({ newtotalunits:e.target.value });
+                      if((e.target.value)===''){
+                        this.setState({ newtotalunits:0})   
+                      }
+                      else{
+              this.setState({ newtotalunits:parseFloat(e.target.value )});
+            }
             }} />
           </FormGroup>
           <FormGroup>
             <Label for="measurementunit">MEASUREMENT UNIT</Label>
-            <Input id="measurementunit" required  onChange={(e) => {
-             
-              this.setState({ newmeasurementunit:e.target.value });
-            }} />
+            
+
+          <select name="measurementunit" value={this.state.newmeasurementunit} id="measurementunit" onChange={(e)=>{this.setState({ newmeasurementunit:e.target.value })}}>
+            <option value="empty">...</option>
+
+            <option value="KILOGRAM">KILOGRAM</option>
+
+            <option value="LITRE">LITRE</option>
+            <option value="UNIT">UNIT</option>
+            
+            </select>
           </FormGroup>
           <FormGroup>
             <Label for="quantityperunit">QUANTITY PER UNIT</Label>
@@ -623,6 +679,87 @@ this.setState({
 
               this.setState({ newquantityperunit: e.target.value});
             }} />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="productcost">PRODUCT COST</Label>
+            <Input id="productcost" value={1*this.state.newtotalunits*this.state.newpriceperunit}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            
+          <Label for="tax">TAX</Label>
+          <Row>
+            <Col>
+          <Label for="taxpercent">PERCENTAGE</Label>
+            </Col>
+            
+            <Col>
+          
+          <Label for="taxamt">AMOUNT</Label>
+          
+          </Col>
+          </Row>
+          <Row>
+            <Col>
+          <Input id="taxpercent" placeholder={this.state.taxflag+'%'} onChange={(e)=>{
+            
+            if(e.target.value===''){
+
+              var temp=0
+              this.setState({ntax:temp,taxflag:temp})
+            
+            }
+            else{
+              var temp=parseFloat(e.target.value)
+
+              let taxamt=temp/100*(this.state.newpriceperunit*this.state.newtotalunits)
+
+            this.setState({ntax:temp,taxflag:taxamt})
+            
+            } 
+            }}/></Col>
+            <Col>
+             <DeleteIcon onClick={()=>this.deltax('taxpercent')}/>
+            </Col>
+            <Col>
+          <Input id="taxamt" placeholder={'Rs'+this.state.taxflag} onChange={(e)=>{
+            
+            if(e.target.value===''){
+
+              var temp=0
+              this.setState({ntax:temp,taxflag:temp})
+            
+            }
+            else{
+              
+              var temp=parseFloat(e.target.value)
+
+              let taxpercent=(temp*100)/(this.state.newpriceperunit*this.state.newtotalunits)
+
+            this.setState({ntax:taxpercent,taxflag:taxpercent})
+            
+            } 
+            }} />
+            </Col>
+            <Col>
+             <DeleteIcon onClick={()=>this.deltax('taxamt')}/>
+            </Col>
+           
+           
+            </Row>
+            
+
+          </FormGroup>
+         
+
+          <FormGroup>
+            <Label for="productcostwithtax">PRODUCT COST WITH TAX</Label>
+            
+            <Input id="productcostwithtax" value={(1*this.state.newtotalunits*this.state.newpriceperunit)*(1+(this.state.ntax/100))}
+            />
+            
           </FormGroup>
 
          
@@ -654,13 +791,17 @@ this.setState({
             <tr>
               
              <th>PRODUCT GROUPID</th>
-             <th>PRODUCT COST</th>
+            
              
               <th>PRICE PER UNIT</th>
               <th>TOTAL UNITS</th>
-              
-              <th>QUANTITY PERUNIT</th>
               <th>MEASUREMENT UNIT</th>
+              <th>PRODUCT COST</th>
+              <th>QUANTITY PER UNIT</th>
+              <th>TAX%</th>
+              <th>PRODUCT COST+TAX</th>
+              
+              
             </tr>
             </thead>
             <tbody>
@@ -671,7 +812,7 @@ this.setState({
 
             <Editmodal
             productgroupId={modalData.productgroupId}
-          prodcost={modalData.prodcost}
+            tax={modalData.tax}
           priceperunit={modalData.priceperunit}
           totalunits={modalData.totalunits}
           measurementunit={modalData.measurementunit}
@@ -713,19 +854,24 @@ this.setState({
             <Row>
             <Col xs='auto'>
             
-            <Input id="addcost" required value={this.state.additionalcost} onChange={(e) => {
-             
-              this.state.additionalcost = e.target.value;
-
+            <Input id="addcost" required  onChange={(e) => {
+              if(e.target.value===''){
+                this.state.additionalcost = 0;
+                this.setState({ additionalcost:this.state.additionalcost });
+              }
+             else{
+              this.state.additionalcost = parseFloat(e.target.value);
               this.setState({ additionalcost:this.state.additionalcost });
+              }
+             
             }} />
             </Col>
-            <DeleteIcon  onClick={() => this.setState({additionalcost:''})}>Delete</DeleteIcon>
+            <DeleteIcon  onClick={() =>this.deleteadditionalcost('addcost')}>Delete</DeleteIcon>
             
             </Row>
             </FormGroup>
           <Row>
-            <h4>ADDITIONAL COST: {this.state.additionalcost}</h4>
+            <h4>ADDITIONAL COST: Rs.{this.state.additionalcost}</h4>
           </Row>
       
           
@@ -767,7 +913,7 @@ this.setState({
                 <td>{this.state.billno}</td>
               <td>{this.state.billdate}</td>
               <td>{this.state.payment}</td>
-              <td>{this.state.additionalcost}</td>
+              <td>Rs.{this.state.additionalcost}</td>
               
               
 
@@ -779,13 +925,16 @@ this.setState({
               <th>SNo</th>
               
              <th>PRODUCT GROUPID</th>
+             <th>PRICE PER UNIT</th>
+              <th>TOTAL UNITS</th>
+              <th>MEASUREMENT UNIT</th>
              <th>PRODUCT COST</th>
              
-              <th>PRICE PER UNIT</th>
-              <th>TOTAL UNITS</th>
               
-              <th>QUANTITY PERUNIT</th>
-              <th>MEASUREMENT UNIT</th>
+              <th>QUANTITY PER UNIT</th>
+              <th>TAX%</th>
+              <th>PRODUCTCOST + TAX</th>
+              
             </tr>
             </thead>
             <tbody>
@@ -800,13 +949,15 @@ this.setState({
     
         <td>{index}</td>
         <td>{i.productgroupId}</td>
-        <td>{i.prodcost}</td>
-        <td>{i.priceperunit}</td>
+        <td>Rs.{i.priceperunit}</td>
         <td>{i.totalunits}</td>
+        <td>{i.measurementunit}</td>
+        <td>Rs.{i.priceperunit*i.totalunits}</td>
+       
 
         <td>{i.quantityperunit}</td>
-        <td>{i.measurementunit}</td>
-       
+        <td>{i.tax}</td>
+        <td>Rs.{(i.priceperunit*i.totalunits)*(1+(i.tax/100))}</td>
 
         </tr>
             )
@@ -820,7 +971,7 @@ this.setState({
         
             </Table>
             
-            <center><h6>Total={parseInt(this.state.totalcost)+parseInt(this.state.additionalcost)}</h6></center>
+            <center><h6>Total=Rs.{parseFloat(this.state.totalcost)+parseFloat(this.state.additionalcost)}</h6></center>
         
 
           
@@ -837,7 +988,7 @@ this.setState({
           </ModalFooter>
         </Modal>
         
-        <Modalchild barcodedet={this.state.barcodedet} flag={this.state.barcodeflag}/>
+        <Modalchild barcodedet={this.state.barcodedet} flag={this.state.barcodeflag} barcodecallback={this.handlebarcodemodal}/>
 
 
     </div>

@@ -43,9 +43,14 @@ class Modalchild extends Component {
       this.setState({
         barcode: temp,
         open: !this.state.open,
+        chk:!this.state.chk,
         flag: !this.state.flag
       });
+      console.log("tantan",!this.state.flag);
+      this.props.barcodecallback(!this.state.flag)
+  
     }
+    
   }
 
   toggle = () => {
@@ -150,7 +155,7 @@ class ComponentToPrint extends Component {
     this.state = {
       bar: this.props.data
     };
-    console.log("hey", this.props.target);
+    console.log("hey", this.props.data);
   }
 
   render() {
