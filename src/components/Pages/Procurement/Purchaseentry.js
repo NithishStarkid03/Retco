@@ -53,6 +53,8 @@ class Purchaseentry extends Component {
       newproductgroupId: '',
       ntax:0,
       taxflag:0,
+      paidamtflag:false,
+      paidamt:0,
 
       addprocmodal:false,
       totalcost:0,
@@ -337,20 +339,43 @@ handlepost=()=>{
 
  console.log('bathcodedet:',this.state.barcodedet,'flag',this.state.barcodeflag)
 
-  
+let procurement={}
 
-const procurement={
+ if(this.state.payment==='PARTIAL_PAID'){
+
+  procurement={
+
+    bill_no:this.state.billno,
+    bill_date:this.state.billdate,
+    additionalcost:this.state.additionalcost,
+    status:this.state.payment,
+    paidAmt:this.state.paidamt,
+    addProcuredProductList:this.state.procuredproduct.filter((item,index)=>index>0),
+    sellerId:this.state.sellerconfirm
+  
+ }
+ document.getElementById('paidamt').value = ''
+
+}
+
+else
+{
+   procurement={
 
   bill_no:this.state.billno,
   bill_date:this.state.billdate,
   additionalcost:this.state.additionalcost,
   status:this.state.payment,
+  paidAmt:null,
   addProcuredProductList:this.state.procuredproduct.filter((item,index)=>index>0),
   sellerId:this.state.sellerconfirm
+}
 
 }
 
 document.getElementById('addcost').value = ''
+
+
 
 axios.post('http://localhost:8002/proc',procurement).then((response)=>{
 
@@ -390,6 +415,8 @@ this.setState({
         newquantityperunit: 0,
         newproductgroupId: '',
         ntax:0,
+        paidamt:0,
+        paidamtflag:false,
         addprocmodal:false,
         totalcost:0,
         requiredItem: 0,
@@ -407,7 +434,7 @@ this.setState({
 
 
 handlebarcodemodal=(barcodereturn)=>{
-  console.log('retuen',barcodereturn)
+  console.log('return',barcodereturn)
   this.setState({
     barcodeflag:barcodereturn
   })
@@ -432,6 +459,30 @@ deleteadditionalcost(id){
   this.setState({
     additionalcost:0
   })
+
+}
+deletepaidamt(id){
+
+  document.getElementById(id).value = ''
+  this.setState({
+    paidamt:0
+  })
+}
+
+
+paymentstatus(val){
+  if(val==='PARTIAL_PAID'){
+    this.setState({
+      payment:val,
+      paidamtflag:!this.state.paidamtflag
+
+    })
+  }
+  else{
+  this.setState({
+    payment:val 
+  })
+}
 
 }
 
@@ -824,30 +875,67 @@ deleteadditionalcost(id){
 
               
             <h4><center>TOTAL COST:{this.state.totalcost}</center></h4>
-            
-
-
-            <FormGroup>
+           
+           
             <Label for="payment">PAYMENT STATUS</Label>
             <Row>
-            <Col xs='auto'>
-            <select name="payment" value={this.state.payment} id="payment" onChange={(e)=>{this.setState({payment:e.target.value})}}>
-            <option value="empty">...</option>
 
+            <FormGroup>
+            
+            
+            <Col xs='auto'>
+            <select name="payment" value={this.state.payment} id="payment" onChange={(e)=>this.paymentstatus(e.target.value)}>
+            <option value="empty">...</option>
             <option value="PAID">PAID</option>
 
             <option value="PARTIAL_PAID">PARTIAL PAID</option>
             <option value="UNPAID">UNPAID</option>
             
-            </select>
-
+            </select>{'  '}
+            <DeleteIcon  onClick={() => this.setState({payment:''})}/>{'  '}
             
             </Col>
-            <DeleteIcon  onClick={() => this.setState({payment:''})}>Delete</DeleteIcon>
+           
+          
+            </FormGroup>
+          
+            
+            
+            {this.state.paidamtflag?(<>
+              <Col xs='auto'>
+              <Label >PAID AMOUNT</Label>
+              </Col>
+            
+            <FormGroup>
+            <Col xs='auto'>
+            <Input id="paidamt"  onChange={(e) => {
+              if(e.target.value===''){
+                this.state.paidamt = 0;
+                this.setState({ paidamt:this.state.paidamt });
+              }
+             else{
+              this.state.paidamt = parseFloat(e.target.value);
+              this.setState({ paidamt:this.state.paidamt });
+              }
+             
+            }} />{' '}
+            
+            
+            
+            
+            </Col>
+            </FormGroup>
+            <DeleteIcon  onClick={() =>this.deletepaidamt('paidamt')}/>
+            
+         
+         
+            </>):(<h3></h3>)}
             
             </Row>
-            <h4>{this.state.payment}</h4>
-            </FormGroup>
+          
+
+            
+            
             
             <FormGroup>
             <Label for="addcost">ADDITIONAL COST</Label>
@@ -912,7 +1000,7 @@ deleteadditionalcost(id){
                 <td>{this.state.sellerconfirm}</td>
                 <td>{this.state.billno}</td>
               <td>{this.state.billdate}</td>
-              <td>{this.state.payment}</td>
+              {this.state.payment==='PARTIAL_PAID'?(<td>{this.state.payment}{' '}AMOUNT PAID:{this.state.paidamt}</td>):(<td>{this.state.payment}</td>)}
               <td>Rs.{this.state.additionalcost}</td>
               
               
