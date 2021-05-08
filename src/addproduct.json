@@ -1,0 +1,61 @@
+{
+  "addprod": [
+    {
+      "name": "Ponni",
+      "description": "High Quality",
+      "imageId": 3,
+      "hsn": "PON123RC",
+      "measurementType": "WEIGHT",
+      "categoryId": "1",
+      "products": [
+        {
+          "quantity": 50,
+          "measurementUnit": "KILOGRAM"
+        },
+        {
+          "quantity": 75,
+          "measurementUnit": "KILOGRAM"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "name": "Thoor",
+      "description": "Top Class dal",
+      "imageId": 4,
+      "hsn": "THR123DL",
+      "measurementType": "WEIGHT",
+      "categoryId": "3",
+      "products": [
+        {
+          "quantity": 50,
+          "measurementUnit": "KILOGRAM"
+        },
+        {
+          "quantity": 100,
+          "measurementUnit": "KILOGRAM"
+        }
+      ],
+      "id": 2
+    },
+    {
+      "name": "Moong",
+      "description": "Vera Level",
+      "imageId": 5,
+      "hsn": "MNG123DL",
+      "measurementType": "WEIGHT",
+      "categoryId": "3",
+      "products": [
+        {
+          "quantity": 50,
+          "measurementUnit": "GRAM"
+        },
+        {
+          "quantity": 100,
+          "measurementUnit": "GRAM"
+        }
+      ],
+      "id": 3
+    }
+  ]
+}

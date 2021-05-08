@@ -45,6 +45,114 @@
       ],
       "sellerId": "Ranjith",
       "id": 2
+    },
+    {
+      "bill_no": "37",
+      "bill_date": "2021-05-05",
+      "additionalcost": 20,
+      "status": "PARTIAL_PAID",
+      "paidAmt": 125,
+      "addProcuredProductList": [
+        {
+          "priceperunit": 40,
+          "totalunits": 10,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10",
+          "productgroupId": "IR8",
+          "tax": 5
+        },
+        {
+          "priceperunit": 100,
+          "totalunits": 10,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10",
+          "productgroupId": "Groundnut",
+          "tax": 10
+        }
+      ],
+      "sellerId": "Ranjith",
+      "id": 3
+    },
+    {
+      "bill_no": "47",
+      "bill_date": "2021-05-05",
+      "additionalcost": 20,
+      "status": "PARTIAL_PAID",
+      "paidAmt": 125,
+      "addProcuredProductList": [
+        {
+          "priceperunit": 100,
+          "totalunits": 8,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10",
+          "productgroupId": "Samba",
+          "tax": 5
+        },
+        {
+          "priceperunit": 40,
+          "totalunits": 30,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10",
+          "productgroupId": "Wheat",
+          "tax": 10
+        }
+      ],
+      "sellerId": "Ranjith",
+      "id": 4
+    },
+    {
+      "bill_no": "27",
+      "bill_date": "2021-05-05",
+      "additionalcost": 20,
+      "status": "PARTIAL_PAID",
+      "paidAmt": 1125,
+      "addProcuredProductList": [
+        {
+          "priceperunit": 100,
+          "totalunits": 10,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10",
+          "productgroupId": "Seragasamba",
+          "tax": 10
+        },
+        {
+          "priceperunit": 10,
+          "totalunits": 30,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10",
+          "productgroupId": "Rava",
+          "tax": 2
+        }
+      ],
+      "sellerId": "Ranjith",
+      "id": 5
+    },
+    {
+      "bill_no": "17",
+      "bill_date": "2021-05-05",
+      "additionalcost": 20,
+      "status": "PAID",
+      "paidAmt": null,
+      "addProcuredProductList": [
+        {
+          "priceperunit": 100,
+          "totalunits": 5,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10",
+          "productgroupId": "Green Peas",
+          "tax": 5
+        },
+        {
+          "priceperunit": 10,
+          "totalunits": 50,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10",
+          "productgroupId": "Moong dal",
+          "tax": 10
+        }
+      ],
+      "sellerId": "Ranjith",
+      "id": 6
     }
   ]
 }

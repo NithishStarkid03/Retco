@@ -3,6 +3,9 @@ import { Container, Row, Col,Form, Button, Modal, ModalHeader, ModalBody, ModalF
 import axios from 'axios';
 import {Table} from 'reactstrap';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ReactPaginate from 'react-paginate';
+import './pagination.css'
+
 
 class Payments extends Component {
 
@@ -19,9 +22,16 @@ class Payments extends Component {
             updateid:0,
             emi:0,
             modalproduct:false,
-            modalprod:[]
+            modalprod:[],
+            searchdata:[],
+            searchinput:'',
+            offset:0,
+            perpage:5,
+            currentpage:0,
+            pagecount:0
 
         }
+        this.handlePageClick = this.handlePageClick.bind(this);
     }
 
 
@@ -31,6 +41,41 @@ class Payments extends Component {
 
     }
 
+
+    handlePageClick=(e)=>{
+        const selectedpage=e.selected;
+        const offset=selectedpage*this.state.perpage
+      
+      
+      this.setState({
+        currentpage:selectedpage,
+        offset:offset
+      },()=>{
+      
+        this.loaddata()
+      
+      })
+      
+      }
+
+      
+loaddata(){
+
+    const data=this.state.paydet
+  
+    const split=data.slice(this.state.offset,this.state.offset+this.state.perpage)
+  
+    this.setState({
+  
+      pagecount:Math.ceil(data.length/this.state.perpage),
+      searchdata:split
+  
+    })
+  
+  }
+      
+
+
     getpaymentdata(){
         axios.get('http://localhost:8002/proc').then((response)=>{
 
@@ -38,9 +83,13 @@ class Payments extends Component {
             let temppay=response.data.filter(item=> item.status==='PARTIAL_PAID' || item.status==='UNPAID')
     
             console.log('filtered',temppay)
+
+            var split=temppay.slice(this.state.offset, this.state.offset + this.state.perpage) 
+
             this.setState({
-    
-                paydet:temppay
+                pagecount:Math.ceil(temppay.length/this.state.perpage),
+                paydet:temppay,
+                searchdata:split
             })
     
     
@@ -87,7 +136,7 @@ document.getElementById('paymode').value=''
 
        
         
-        let tempdata=this.state.paydet[this.state.updateindex]
+        let tempdata=this.state.searchdata[this.state.updateindex]
 
         let statusupdate={
             bill_no:tempdata.bill_no ,
@@ -148,7 +197,7 @@ document.getElementById('paymode').value=''
 
     updatepartialpay=()=>{
 
-        let tempdata=this.state.paydet[this.state.updateindex]
+        let tempdata=this.state.searchdata[this.state.updateindex]
         let statusupdate={
             bill_no:tempdata.bill_no ,
             bill_date: tempdata.bill_date,
@@ -199,9 +248,44 @@ document.getElementById('paymode').value=''
         console.log('a',prodet)
     }
 
+
+    handlesearch=(e)=>{
+        this.setState({searchinput:e.target.value},()=>{
+      
+      
+          this.globalsearch();
+      
+        })
+      }
+      
+      globalsearch=()=>{
+      
+      let searchinput=this.state.searchinput;
+      let filterdata=this.state.paydet.filter(val=>{
+      
+      return(
+        val.bill_no.toLowerCase().includes(searchinput.toLowerCase()) ||
+        val.status.toLowerCase().includes(searchinput.toLowerCase()) 
+      
+      
+      
+      )
+      
+      
+      })
+      
+      this.setState({
+      
+      searchdata:filterdata
+      
+      })
+      
+      }
+        
+
     render() {
 
-        let datas=this.state.paydet.map((it,ind)=>{
+        let datas=this.state.searchdata.map((it,ind)=>{
                 let tempcost=0
                 if(it.status==='PARTIAL_PAID'){
             return(
@@ -269,6 +353,21 @@ document.getElementById('paymode').value=''
            
              <Container>
             <h1>PAYMENTS</h1>
+            <Row>
+            <b>Search</b>: <input
+        style={{ marginLeft: 5 }}
+        type="text"
+        placeholder="Type to search..."
+        value={this.state.searchinput}
+        onChange={e => this.handlesearch(e)}
+      
+        />
+        <DeleteIcon onClick={()=>this.setState({searchinput:'',searchdata:this.state.paydet})}></DeleteIcon>
+
+
+        
+            {this.state.searchdata.length === 0 && <span>No records found!</span> }
+            
             <Table striped>
             <thead>
                 <tr>
@@ -289,8 +388,23 @@ document.getElementById('paymode').value=''
             </tbody>    
                 
             </Table>
+            </Row>
            
-           
+            <Row>
+          <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={this.state.pagecount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}/>
+
+          </Row>
 
 
             <Modal isOpen={this.state.fullpayflag} toggle={this.togglefullpay}>
@@ -298,7 +412,8 @@ document.getElementById('paymode').value=''
                     CONFIRM FULL PAYMENT
                 </ModalHeader>
                 <ModalBody>
-                    <Row> <h5>DUE AMOUNT={' '}</h5><b><h5>{this.state.showamt}</h5></b></Row>
+                <Row> <h5>TOTAL AMOUNT={' '}</h5><b><h5>{this.state.showamt}</h5></b></Row>
+                    <Row> <h5>DUE AMOUNT={' '}</h5><b><h5>{this.state.showremamt}</h5></b></Row>
                    
                     <Row><h5>AMOUNT PAID={' '}</h5><b><h5>{this.state.showremamt}</h5></b></Row>
                 </ModalBody>

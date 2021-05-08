@@ -553,7 +553,7 @@ paymentstatus(val){
     <Container>
     
     <div className="App">
-       <h1>PROCUREMENT</h1>
+       <center><h3>PROCUREMENT</h3></center>
     <Form onSubmit={this.sendseller}>  
     <Row>
     <Col xs="auto">
@@ -715,11 +715,12 @@ paymentstatus(val){
             
 
           <select name="measurementunit" value={this.state.newmeasurementunit} id="measurementunit" onChange={(e)=>{this.setState({ newmeasurementunit:e.target.value })}}>
-            <option value="empty">...</option>
+            <option >...</option>
 
             <option value="KILOGRAM">KILOGRAM</option>
-
+            <option value="GRAM">GRAM</option>
             <option value="LITRE">LITRE</option>
+            <option value="MILLILITRE">MILLILITRE</option>
             <option value="UNIT">UNIT</option>
             
             </select>
