@@ -19,6 +19,7 @@ import Inventorydispatch from './Pages/Packing/Inventorydispatch';
 
 import Purchaseentry from './Pages/Procurement/Purchaseentry';
 import Payments from './Pages/Procurement/Payments';
+import Paymenthistory from './Pages/Procurement/Paymenthistory';
 
 
 import Addproduct from './Pages/Master/Addproduct';
@@ -26,6 +27,7 @@ import Customer from './Pages/Master/Customer';
 import Pricing from './Pages/Master/Pricing';
 import ProductMaster from './Pages/Master/Productmaster';
 import Addseller from './Pages/Master/Addseller';
+import Productcategory from './Pages/Master/Productcategory'
 
 import Orderstatus from './Pages/Distribution/Orderstatus';
 import Orders from './Pages/Distribution/Orders';
@@ -51,6 +53,7 @@ function Tabs() {
                 <Route path="/master/pricing" exact component={Pricing} />
                 <Route path="/master/productmaster" exact component={ProductMaster} />
                 <Route path="/master/addseller" exact component={Addseller} />
+                <Route path="/master/productmaster/:id" exact component={Productcategory} />
                 
 
           <Route path="/distribution" exact component={Distributiontab} />
@@ -63,7 +66,7 @@ function Tabs() {
 
                 <Route path="/procurement/purchaseentry" exact component={Purchaseentry} />
                 <Route path="/procurement/payments" exact component={Payments} />
-               
+                <Route path="/procurement/paymenthistory" exact component={Paymenthistory} />
                 
 
 

@@ -59,6 +59,12 @@ export const SidebarData = [
         icon: <IoIcons.IoIosPaper />,
         cName: "sub-nav",
       },
+      {
+        title: "Payment History",
+        path: "/procurement/paymenthistory",
+        icon: <IoIcons.IoIosPaper />,
+        cName: "sub-nav",
+      },
      
     ],
   },

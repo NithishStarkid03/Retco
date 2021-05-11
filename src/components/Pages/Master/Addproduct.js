@@ -28,13 +28,21 @@ class Addproduct extends Component {
             check:false,
             imageflag:false,
             checkimg:false,
-            pic:null
+            pic:null,
+
+            newcategoryname:'',
+            newcategoryflag:false,
+            checknewcategory:false,
+            newcategorypic:null,
+            newcategoryimgId:''
 
 
         }
         this.onDrop = this.onDrop.bind(this);
         this.onimgsubmit = this.onimgsubmit.bind(this)
         this.fileUpload = this.fileUpload.bind(this)
+        this.onDropcategory=this.onDropcategory.bind(this)
+        this.onnewcategoryimgsubmit=this.onnewcategoryimgsubmit.bind(this)
     }
     componentDidMount(){
         this.getcategory();
@@ -166,6 +174,7 @@ onDrop(picture) {
     });
 }
 
+
 onimgsubmit(e){
     e.preventDefault() 
     this.fileUpload(this.state.pic).then((response)=>{
@@ -182,20 +191,62 @@ onimgsubmit(e){
    
 
 }
+
 fileUpload(file){
 
-
+console.log('ran',file)
     const formData = new FormData();
-    formData.append('file',file)
+    formData.append('file',file[0])
     const config = {
         headers: {
             'content-type': 'multipart/form-data'
         }
     }
-     return post('http://localhost:8005/productimg', formData,config)
+     return post(' http://retco-server.us-east-1.elasticbeanstalk.com/api/uploadImage', formData,config)
        
     
   }
+
+  
+onDropcategory(picture){
+    this.setState({
+        newcategorypic:picture
+    })
+    }
+
+onnewcategoryimgsubmit(e){
+    e.preventDefault() 
+    this.fileUpload(this.state.newcategorypic).then((response)=>{
+        console.log('after postin new category img',response.data);
+         
+        this.setState({
+            newcategoryimgId:response.data.id,
+            newcategorypic:null,
+            newcategoryflag:!this.state.newcategoryflag,
+            checknewcategory:false,
+        })
+
+        if(this.state.newcategoryname && this.state.newcategoryimgId){
+
+            const categorypost={
+                name:this.state.newcategoryname,
+                imageId:this.state.newcategoryimgId
+            }
+            axios.post('http://localhost:8004/category',categorypost).then(res=>{
+                console.log('posted new category',res.data)
+            
+                this.setState({
+                    newcategoryname:'',
+                    newcategoryimgId:''
+                })
+            })
+
+            
+        }
+
+    })
+
+}    
 
   postproduct=()=>{
 
@@ -240,7 +291,7 @@ fileUpload(file){
         document.getElementById('description').value=''
         document.getElementById('productname').value=''
         document.getElementById('measurementtype').value=''
-        document.getElementById('category').value=''
+        document.getElementById('checkbox').checked=false
 
     })
     }
@@ -250,7 +301,18 @@ fileUpload(file){
     
 }
 
+addnewcategory=()=>{
+    this.setState({
+        newcategoryflag:!this.state.newcategoryflag
+    })
 
+}
+detetenewcategoryname=()=>{
+    this.setState({
+        newcategoryname:''
+    })
+    document.getElementById('newcategoryname').value=''
+}
   
 
     render() {
@@ -342,7 +404,7 @@ fileUpload(file){
                     </Col>
 
                    <Col sm={4}>
-                    <Button color="primary" >ADD NEW CATEGORY</Button>
+                    <Button color="primary" onClick={this.addnewcategory} >ADD NEW CATEGORY</Button>
                     </Col>
                     
         
@@ -440,7 +502,7 @@ fileUpload(file){
                     <CardFooter>
                     <Row>
                         <Col>
-                            <Input type="checkbox" onClick={()=>{this.setState({check:!this.state.check})}}/>{' '}
+                            <Input type="checkbox" id="checkbox" onClick={()=>{this.setState({check:!this.state.check})}}/>{' '}
                             CONFIRM PRODUCT DETAILS</Col>
                             <Col>
                         {this.state.check?(
@@ -555,6 +617,50 @@ fileUpload(file){
 
                     </ModalFooter>
 
+                </Modal>
+
+
+                <Modal isOpen={this.state.newcategoryflag} toggle={()=>this.setState({newcategoryflag:!this.state.newcategoryflag,checknewcategory:false,newcategorypic:null})}>
+                    <ModalHeader toggle={()=>this.setState({newcategoryflag:!this.state.newcategoryflag,checknewcategory:false,newcategorypic:null})}>
+                        ADD NEW CATEGORY
+                    </ModalHeader>
+                    <ModalBody>
+                        <FormGroup row>
+                            <Label for="newcategoryname">CATEGORY NAME</Label>
+                            <Col sm={4}>
+                            <Input id="newcategoryname" onChange={(e)=>this.setState({newcategoryname:e.target.value})}></Input>
+                            </Col>
+                            <Col sm={1}><DeleteIcon onClick={this.detetenewcategoryname}/></Col>
+                        </FormGroup>   
+                        <FormGroup row>
+                        <ImageUploader
+                withIcon={false}
+                buttonText='Choose image'
+                onChange={this.onDropcategory}
+                imgExtension={['.jpg','.png','.jpeg','.jfif']}
+                maxFileSize={5242880}
+                withPreview={true}
+                />
+                </FormGroup>   
+
+                    <Row>
+                       <Col sm={4}>
+                        <Label for="imgcheckbox">CONFIRM UPLOAD</Label>
+                        </Col>
+                        <Col sm={1}>
+                        <Input type="checkbox" onClick={()=>{this.setState({checknewcategory:!this.state.checknewcategory})}}/>{' '}
+
+                        </Col>
+                    </Row>
+                        
+                              
+                    </ModalBody>
+                    <ModalFooter>
+                    {this.state.checknewcategory?(
+                        <Button color="success" onClick={this.onnewcategoryimgsubmit}>ADD</Button>):(<></>)}
+                        <Button color="danger" onClick={()=>this.setState({newcategoryflag:!this.state.newcategoryflag,checknewcategory:false,newcategorypic:null})}>CANCEL</Button>
+                        
+                    </ModalFooter>
                 </Modal>
             
             </div>

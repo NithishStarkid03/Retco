@@ -1,0 +1,211 @@
+
+
+  {
+  
+    "productmaster": [
+    {
+    "name":"Rice",
+    "id": 1,
+    "productGroups":[ 
+        {
+            "name": "Ponni",
+            "description": "High Quality",
+            "imageId": "79208542-dd80-46ab-ae3e-d90f78aeade9",
+            "hsn": "100610",
+            "measurementType": "WEIGHT",
+            "status": true,
+            "products": [
+              {
+                "id":1,
+                "quantity": 50,
+                "measurementUnit": "KILOGRAM"
+              },
+              {
+                "id":2,
+                "quantity": 100,
+                "measurementUnit": "KILOGRAM"
+              }
+            ],
+            "id": 1
+          },
+          {
+            "name": "Basmati",
+            "description": "A+ Grade",
+            "imageId": "9e3176a0-8351-47e1-8c42-6ee776b1ff74",
+            "hsn": "10063020",
+            "measurementType": "WEIGHT",
+            "status": true,
+            "products": [
+              {
+                "id":1,
+                "quantity": 25,
+                "measurementUnit": "KILOGRAM"
+              },
+              {
+                "id":2,
+                "quantity": 50,
+                "measurementUnit": "KILOGRAM"
+              }
+            ],
+            "id": 2
+          },
+          {
+            "name": "Bamboo",
+            "description": "Organic",
+            "imageId": "be80a4ed-6e4a-4f8e-a361-379455ace199",
+            "hsn": "10063090",
+            "measurementType": "WEIGHT",
+            "status": true,
+            "products": [
+              {
+                "id":1,
+                "quantity": 10,
+                "measurementUnit": "KILOGRAM"
+              },
+              {
+                "id":2,
+                "quantity": 20,
+                "measurementUnit": "KILOGRAM"
+              },
+              {
+                "id":3,
+                "quantity": 50,
+                "measurementUnit": "KILOGRAM"
+              }
+            ],
+            "id": 3
+          }
+    
+    ],
+    "imageId": "722449d8-a7f7-460d-b53c-6a0ba76ab68b"
+    },
+
+    {
+        "name":"Dal",
+        "id": 2,
+        "productGroups":[
+            
+      {
+        "name": "Moong",
+        "description": "Good quality",
+        "imageId": "ba1309a4-eb17-44a1-81cd-6793d975cb7b",
+        "hsn": "07139010",
+        "measurementType": "WEIGHT",
+        "status": true,
+        "products": [
+          {
+            "id":1,
+            "quantity": 10,
+            "measurementUnit": "KILOGRAM"
+          },
+          {
+            "id":2,
+            "quantity": 20,
+            "measurementUnit": "KILOGRAM"
+          }
+        ],
+        "id": 4
+      },
+      {
+        "name": "Bengal",
+        "description": "Pure and Clean",
+        "imageId": "d2b045f4-20b0-4cda-80d5-227ca92f7b6e",
+        "hsn": "07132020",
+        "measurementType": "WEIGHT",
+        "status": true,
+        "products": [
+          {
+            "id":1,
+            "quantity": 10,
+            "measurementUnit": "KILOGRAM"
+          },
+          {
+            "id":2,
+            "quantity": 25,
+            "measurementUnit": "KILOGRAM"
+          }
+        ],
+        "id": 5
+      }
+
+
+        ],
+
+        "imageId": "c18c69cd-0a4c-4f26-b65b-500cc1a11b9d"
+        },
+
+        {
+            "name": "Wheat",
+           
+            "id": 3,
+            "productGroups":[],
+
+            "imageId": "e71e632b-09d3-4718-b76c-35aae05920b8"
+
+            
+
+
+          },
+
+          {
+            "name": "Pulse",
+            
+            "id": 4,
+            "productGroups":[
+                {
+                    "name": "Chickpea",
+                    "description": "Golden in color",
+                    "imageId": "6cc4cad7-16f7-466e-b58e-fe975a57b8f5",
+                    "hsn": "07132000",
+                    "measurementType": "WEIGHT",
+                    "status": true,
+                    "products": [
+                      {
+                        "id":1,
+                        "quantity": 1,
+                        "measurementUnit": "KILOGRAM"
+                      },
+                      { 
+                        "id":2,
+                        "quantity": 3,
+                        "measurementUnit": "KILOGRAM"
+                      },
+                      {
+                        "id":3,
+                        "quantity": 5,
+                        "measurementUnit": "KILOGRAM"
+                      }
+                    ],
+                    "id": 6
+                  },
+                  {
+                    "name": "Kidneybean",
+                    "description": "Imported",
+                    "imageId": "9b0c465b-25d6-4f3d-bca8-7c1019fd71d3",
+                    "hsn": "07133300",
+                    "measurementType": "WEIGHT",
+                    "status": true,
+                    "products": [
+                      {
+                        "id":1,
+                        "quantity": 500,
+                        "measurementUnit": "GRAM"
+                      },
+                      {
+                        "id":2,
+                        "quantity": 1,
+                        "measurementUnit": "KILOGRAM"
+                      }
+                    ],
+                    "id": 7
+                  }
+            ],
+            "imageId": "7a9261c0-77d2-43bc-8a58-21cf14aac7ef"
+          }
+
+          
+      
+   ]
+
+
+}

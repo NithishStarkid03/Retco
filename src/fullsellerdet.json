@@ -95,6 +95,22 @@
         "pin": "624432"
       },
       "id": 9
+    },
+    {
+      "name": "Vignesh",
+      "gst": "SELL1227",
+      "email": "admin@gmail.com",
+      "phone": "9898786713",
+      "address": {
+        "addressLine1": "14-C",
+        "addressLine2": "Arasu street",
+        "addressLine3": "NRT Nagar",
+        "city": "Theni",
+        "state": "Tamilnadu",
+        "country": "India",
+        "pin": "625532"
+      },
+      "id": 10
     }
   ]
 }

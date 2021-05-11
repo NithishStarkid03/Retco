@@ -4,7 +4,7 @@
       "bill_no": "26",
       "bill_date": "2021-05-05",
       "additionalcost": 10,
-      "status": "UNPAID",
+      "status": "PAID",
       "paidAmt": null,
       "addProcuredProductList": [
         {
@@ -23,8 +23,8 @@
       "bill_no": "07",
       "bill_date": "2021-05-05",
       "additionalcost": 20,
-      "status": "PARTIAL_PAID",
-      "paidAmt": 125,
+      "status": "PAID",
+      "paidAmt": null,
       "addProcuredProductList": [
         {
           "priceperunit": 10,
@@ -153,6 +153,25 @@
       ],
       "sellerId": "Ranjith",
       "id": 6
+    },
+    {
+      "bill_no": "10",
+      "bill_date": "2021-05-10",
+      "additionalcost": 0,
+      "status": "PARTIAL_PAID",
+      "paidAmt": 2000,
+      "addProcuredProductList": [
+        {
+          "productgroupId": "Ponni",
+          "tax": 1,
+          "priceperunit": 60,
+          "totalunits": 100,
+          "measurementunit": "KILOGRAM",
+          "quantityperunit": "10"
+        }
+      ],
+      "sellerId": "Ranjith",
+      "id": 7
     }
   ]
 }

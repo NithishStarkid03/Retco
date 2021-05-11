@@ -3,10 +3,151 @@
     {
       "name": "Ponni",
       "description": "High Quality",
-      "imageId": 3,
-      "hsn": "PON123RC",
+      "imageId": "79208542-dd80-46ab-ae3e-d90f78aeade9",
+      "hsn": "100610",
       "measurementType": "WEIGHT",
       "categoryId": "1",
+      "products": [
+        {
+          "quantity": 50,
+          "measurementUnit": "KILOGRAM"
+        },
+        {
+          "quantity": 100,
+          "measurementUnit": "KILOGRAM"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "name": "Basmati",
+      "description": "A+ Grade",
+      "imageId": "9e3176a0-8351-47e1-8c42-6ee776b1ff74",
+      "hsn": "10063020",
+      "measurementType": "WEIGHT",
+      "categoryId": "1",
+      "products": [
+        {
+          "quantity": 25,
+          "measurementUnit": "KILOGRAM"
+        },
+        {
+          "quantity": 50,
+          "measurementUnit": "KILOGRAM"
+        }
+      ],
+      "id": 2
+    },
+    {
+      "name": "Bamboo",
+      "description": "Organic",
+      "imageId": "be80a4ed-6e4a-4f8e-a361-379455ace199",
+      "hsn": "10063090",
+      "measurementType": "WEIGHT",
+      "categoryId": "1",
+      "products": [
+        {
+          "quantity": 10,
+          "measurementUnit": "KILOGRAM"
+        },
+        {
+          "quantity": 20,
+          "measurementUnit": "KILOGRAM"
+        },
+        {
+          "quantity": 50,
+          "measurementUnit": "KILOGRAM"
+        }
+      ],
+      "id": 3
+    },
+    {
+      "name": "Moong",
+      "description": "Good quality",
+      "imageId": "ba1309a4-eb17-44a1-81cd-6793d975cb7b",
+      "hsn": "07139010",
+      "measurementType": "WEIGHT",
+      "categoryId": "2",
+      "products": [
+        {
+          "quantity": 10,
+          "measurementUnit": "KILOGRAM"
+        },
+        {
+          "quantity": 20,
+          "measurementUnit": "KILOGRAM"
+        }
+      ],
+      "id": 4
+    },
+    {
+      "name": "Bengal",
+      "description": "Pure and Clean",
+      "imageId": "d2b045f4-20b0-4cda-80d5-227ca92f7b6e",
+      "hsn": "07132020",
+      "measurementType": "WEIGHT",
+      "categoryId": "2",
+      "products": [
+        {
+          "quantity": 10,
+          "measurementUnit": "KILOGRAM"
+        },
+        {
+          "quantity": 25,
+          "measurementUnit": "KILOGRAM"
+        }
+      ],
+      "id": 5
+    },
+    {
+      "name": "Chickpea",
+      "description": "Golden in color",
+      "imageId": "6cc4cad7-16f7-466e-b58e-fe975a57b8f5",
+      "hsn": "07132000",
+      "measurementType": "WEIGHT",
+      "categoryId": "4",
+      "products": [
+        {
+          "quantity": 1,
+          "measurementUnit": "KILOGRAM"
+        },
+        {
+          "quantity": 3,
+          "measurementUnit": "KILOGRAM"
+        },
+        {
+          "quantity": 5,
+          "measurementUnit": "KILOGRAM"
+        }
+      ],
+      "id": 6
+    },
+    {
+      "name": "Kidneybean",
+      "description": "Imported",
+      "imageId": "9b0c465b-25d6-4f3d-bca8-7c1019fd71d3",
+      "hsn": "07133300",
+      "measurementType": "WEIGHT",
+      "categoryId": "4",
+      "products": [
+        {
+          "quantity": 500,
+          "measurementUnit": "GRAM"
+        },
+        {
+          "quantity": 1,
+          "measurementUnit": "KILOGRAM"
+        }
+      ],
+      "id": 7
+    },
+    {
+      "name": "Greengram",
+      "description": "High Quality",
+      "imageId": "77fc2b53-e0ca-4f1a-be6d-1f3b4efa60b2",
+      "hsn": "12345876",
+      "measurementType": "WEIGHT",
+      "categoryId": "2",
       "products": [
         {
           "quantity": 50,
@@ -17,45 +158,7 @@
           "measurementUnit": "KILOGRAM"
         }
       ],
-      "id": 1
-    },
-    {
-      "name": "Thoor",
-      "description": "Top Class dal",
-      "imageId": 4,
-      "hsn": "THR123DL",
-      "measurementType": "WEIGHT",
-      "categoryId": "3",
-      "products": [
-        {
-          "quantity": 50,
-          "measurementUnit": "KILOGRAM"
-        },
-        {
-          "quantity": 100,
-          "measurementUnit": "KILOGRAM"
-        }
-      ],
-      "id": 2
-    },
-    {
-      "name": "Moong",
-      "description": "Vera Level",
-      "imageId": 5,
-      "hsn": "MNG123DL",
-      "measurementType": "WEIGHT",
-      "categoryId": "3",
-      "products": [
-        {
-          "quantity": 50,
-          "measurementUnit": "GRAM"
-        },
-        {
-          "quantity": 100,
-          "measurementUnit": "GRAM"
-        }
-      ],
-      "id": 3
+      "id": 8
     }
   ]
 }
