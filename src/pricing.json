@@ -1,0 +1,31 @@
+{
+    "price":[
+        { 
+            "procuredProductId":1, 
+            "productGroupId":1,
+             "productGroupName":"Ponni",
+             "batchCode":"PON123",
+              "stock":1500, 
+              "unit":"KILOGRAM",
+               "tax":5,
+                "products": [
+                    { "id":1, "quantity":500, "unit":"GRAM" },
+                    { "id":2, "quantity":1, "unit":"KILOGRAM" },
+                    { "id":3, "quantity":2, "unit":"KILOGRAM" }]
+                },
+                {
+                    "procuredProductId":2,
+                     "productGroupId":3,
+                      "productGroupName":"Thoor",
+                      "batchCode":"THR123",
+                       "stock":500,
+                        "unit":"KILOGRAM", 
+                        "tax":10,
+                         "products": [
+                             { "id":1, "quantity":500, "unit":"GRAM" },
+                             { "id":2, "quantity":2, "unit":"KILOGRAM" },
+                             { "id":3, "quantity":5, "unit":"KILOGRAM" }]
+                             
+                }
+    ]
+}

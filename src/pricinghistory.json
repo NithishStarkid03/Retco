@@ -1,0 +1,49 @@
+{
+    "pricinghistory":[
+    {
+    "id":1,
+    "wastage":4,
+    "profitMargin":2,
+    "taxSlab":3,
+    "mrp":5,
+    "procuredProductName":"Ponni",
+    "packingCosts":[
+       {
+          "productName":"500 GRAM" ,
+          "cost":10.15
+       },
+       {
+          "productName":"2 KILOGRAM ",
+          "cost":30
+       },
+       {
+          "productName":"3 KILOGRAM",
+          "cost":50
+       }
+    ]
+    },
+    {
+        "id":2,
+        "wastage":5,
+        "profitMargin":3,
+        "taxSlab":5,
+        "mrp":10,
+        "procuredProductName":"Thoor",
+        "packingCosts":[
+           {
+              "productName":"1 KILOGRAM" ,
+              "cost":12
+           },
+           {
+              "productName":"3 KILOGRAM ",
+              "cost":40
+           },
+           {
+              "productName":"5 KILOGRAM",
+              "cost":60
+           }
+        ]
+        }
+]
+    
+}

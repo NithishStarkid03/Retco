@@ -1,0 +1,46 @@
+{
+  "pricepost": [
+    {
+      "wastage": 8,
+      "profitMargin": 10,
+      "mrp": 10,
+      "procuredProductId": 2,
+      "packingCosts": [
+        {
+          "productId": 1,
+          "cost": 10
+        },
+        {
+          "productId": 2,
+          "cost": 15
+        },
+        {
+          "productId": 3,
+          "cost": 20
+        }
+      ],
+      "id": 1
+    },
+    {
+      "wastage": 5,
+      "profitMargin": 5,
+      "mrp": 5,
+      "procuredProductId": 1,
+      "packingCosts": [
+        {
+          "productId": 1,
+          "cost": 20
+        },
+        {
+          "productId": 2,
+          "cost": 25
+        },
+        {
+          "productId": 3,
+          "cost": 30
+        }
+      ],
+      "id": 2
+    }
+  ]
+}

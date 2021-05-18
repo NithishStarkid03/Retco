@@ -37,6 +37,12 @@ export const SidebarData = [
         path: "/master/addseller",
         icon: <IoIcons.IoIosPaper />,
       },
+      {
+        title: "Pricing History",
+        path: "/master/pricinghistory",
+        icon: <IoIcons.IoIosPaper />,
+      }
+
     ],
   },
   {
