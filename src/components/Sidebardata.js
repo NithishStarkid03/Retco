@@ -99,6 +99,11 @@ export const SidebarData = [
         path: "/packing/packingprocess",
         icon: <IoIcons.IoIosPaper />,
       },
+      {
+        title: "Packing Order Generation",
+        path: "/packing/packingordergeneration",
+        icon: <IoIcons.IoIosPaper />,
+      },
 
     ],
   },
