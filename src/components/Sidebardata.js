@@ -84,16 +84,7 @@ export const SidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
   
     subNav: [
-      {
-        title: "CurrentStock",
-        path: "/packing/currentstock",
-        icon: <IoIcons.IoIosPaper />,
-      },
-      {
-        title: "InventoryDispatch",
-        path: "/packing/inventorydispatch",
-        icon: <IoIcons.IoIosPaper />,
-      },
+      
       {
         title: "PackingProcess",
         path: "/packing/packingprocess",
@@ -104,38 +95,59 @@ export const SidebarData = [
         path: "/packing/packingordergeneration",
         icon: <IoIcons.IoIosPaper />,
       },
+      {
+        title: "Packing History",
+        path: "/packing/currentstock",
+        icon: <IoIcons.IoIosPaper />,
+      },
+      {
+        title: "InventoryDispatch",
+        path: "/packing/inventorydispatch",
+        icon: <IoIcons.IoIosPaper />,
+      },
 
     ],
   },
 
-
-  {
-    title: "Distibution",
-    path: "/distribution",
+{
+  title: "Hub",
+    path: "/hub",
     icon: <FaIcons.FaEnvelopeOpenText />,
   
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
   
     subNav: [
+      
       {
-        title: "Orders",
-        path: "/distribution/orders",
+        title: "Hub Order",
+        path: "/hub/huborder",
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: "OrderStatus",
-        path: "/distribution/orderstatus",
+        title: "Order Status",
+        path: "/hub/orderstatus",
+        icon: <IoIcons.IoIosPaper />,
+      },
+      {
+        title: "Hub Stock",
+        path: "/hub/hubstock",
+        icon: <IoIcons.IoIosPaper />,
+      },
+      {
+        title: "Customer Order",
+        path: "/hub/customerorder",
         icon: <IoIcons.IoIosPaper />,
       },
 
     ],
-  },
+ 
 
-
+},
+  
   {
-    title: "Support",
-    path: "/support",
+    title: "About",
+    path: "/about",
     icon: <IoIcons.IoMdHelpCircle />,
   },
 

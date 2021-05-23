@@ -1,11 +1,16 @@
 {
   "packpending": [
     {
-      "timestamp": null,
       "effectiveStock": 50,
       "warehouseUnpackedStockId": 1,
-      "productId": 1,
+      "productId": "1",
       "id": 1
+    },
+    {
+      "effectiveStock": 10,
+      "warehouseUnpackedStockId": 2,
+      "productId": "2",
+      "id": 2
     }
   ]
 }

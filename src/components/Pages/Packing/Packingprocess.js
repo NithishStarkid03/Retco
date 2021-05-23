@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { Component } from 'react'
 import { Button, Card, CardBody, CardTitle, Container, Modal, ModalBody, ModalFooter, ModalHeader, Table,Row,Col, Input } from 'reactstrap';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ReactPaginate from 'react-paginate';
+import './pagination.css'
+
 
 
 
@@ -12,10 +15,11 @@ class Packingprocess extends Component {
         super(props);
         this.state={
             packingdata:[],
-            addpriceopen:false,
+            addpackopen:false,
             variantname:'',
             variantquantity:0,
             variantunit:'',
+            variantid:0,
             selectedstock:0,
             selectedprod:'',
             postquantity:0,
@@ -23,23 +27,66 @@ class Packingprocess extends Component {
             tempunit:'',
             confirmpriceopen:false,
             procuredprodid:0,
-            prodgrpid:0
+            prodgrpId:0,
+
+            searchdata:[],
+            searchinput:'',
+            offset:0,
+            perpage:5,
+            currentpage:0,
+            pagecount:0
         }
+        this.handlePageClick = this.handlePageClick.bind(this);
 
     }
     componentDidMount(){
         this.getpackingdata()
     }
 
-    toggleaddpricemodal(stock,prodname,variants,unit,procid,prodid){
+    
+handlePageClick=(e)=>{
+    const selectedpage=e.selected;
+    const offset=selectedpage*this.state.perpage
+  
+  
+  this.setState({
+    currentpage:selectedpage,
+    offset:offset
+  },()=>{
+  
+    this.loaddata()
+  
+  })
+  
+  }
+  
+  loaddata(){
+  
+    const data=this.state.packingdata
+  
+    const split=data.slice(this.state.offset,this.state.offset+this.state.perpage)
+  
+    this.setState({
+  
+      pagecount:Math.ceil(data.length/this.state.perpage),
+      searchdata:split
+  
+    })
+  
+  }
+  
+  
+  
+
+    toggleaddpackmodal(stock,prodname,variants,unit,procid,prodid){
         this.setState({
             selectedstock:stock,
             selectedprod:prodname,
             tempvariants:variants,
             tempunit:unit,
             procuredprodid:procid,
-            prodgrpid:prodid,
-            addpriceopen:!this.state.addpriceopen
+            prodgrpId:prodid,
+            addpackopen:!this.state.addpackopen
         })
     }
 
@@ -47,8 +94,13 @@ class Packingprocess extends Component {
         axios.get('http://localhost:8011/pack').then(res=>{
             console.log(res.data)
 
+            var split=res.data.slice(this.state.offset, this.state.offset + this.state.perpage)
+
+
             this.setState({
-                packingdata:res.data
+                packingdata:res.data,
+                searchdata:split,
+                pagecount:Math.ceil(res.data.length/this.state.perpage)
             })
         })
         
@@ -59,8 +111,9 @@ class Packingprocess extends Component {
         a=val.split(' ')
         this.setState({
             variantquantity:a[0],
-            variantname:val,
-            variantunit:a[1]
+            variantname:a[0]+' '+a[1],
+            variantunit:a[1],
+            variantid:a[2]
         })
 
     }
@@ -82,16 +135,15 @@ class Packingprocess extends Component {
 
     postpack=()=>{
         const warehousepack={
-            timestamp:null,
             effectiveStock:this.state.postquantity,
             warehouseUnpackedStockId:this.state.procuredprodid,
-            productId:this.state.prodgrpid
+            productId:this.state.variantid
         }
         axios.post('http://localhost:8012/packpending',warehousepack).then(res=>{
             console.log('posted',res.data)
         
             this.setState({
-                addpriceopen:false,
+                addpackopen:false,
                 variantname:'',
                 variantquantity:0,
                 variantunit:'',
@@ -102,12 +154,48 @@ class Packingprocess extends Component {
                 tempunit:'',
                 confirmpriceopen:false,
                 procuredprodid:0,
-                prodgrpid:0
+                prodgrpId:0,
+                variantid:0,
+
+                searchdata:[],
+                searchinput:'',
+                offset:0,
+                perpage:5,
+                currentpage:0,
+                pagecount:0
             })
 
         })
 
     }
+
+    
+handlesearch=(e)=>{
+    this.setState({searchinput:e.target.value},()=>{
+  
+  
+      this.globalsearch();
+  
+    })
+  }
+  
+  globalsearch=()=>{
+  
+  let searchinput=this.state.searchinput;
+  let filterdata=this.state.packingdata.filter(val=>{
+  
+  return(
+    val.productGroupName.toLowerCase().includes(searchinput.toLowerCase()) ||
+    val.batchCode.toLowerCase().includes(searchinput.toLowerCase()) 
+  )
+  
+  })
+  this.setState({
+  searchdata:filterdata
+  })
+  }
+  
+
 
     render() {
         return (
@@ -115,6 +203,20 @@ class Packingprocess extends Component {
                 <div className="App">
                     <center><h3>PACKING PROCESS</h3></center>
                     <br></br>
+                    <b>Search</b>: <input
+        style={{ marginLeft: 5 }}
+        type="text"
+        placeholder="Type to search..."
+        value={this.state.searchinput}
+        onChange={e => this.handlesearch(e)}
+      
+        />
+        <DeleteIcon onClick={()=>this.setState({searchinput:'',searchdata:this.state.packingdata})}></DeleteIcon>
+
+
+        
+            {this.state.searchdata.length === 0 && <span>No records found!</span> }
+            
                     <Table hover>
                         <thead>
                             <tr>
@@ -127,7 +229,7 @@ class Packingprocess extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.packingdata.map((pd,ind)=>{
+                            {this.state.searchdata.map((pd,ind)=>{
                                 
                                 return(
                                     <tr key={ind}>
@@ -150,7 +252,7 @@ class Packingprocess extends Component {
                                         </td>
                                         
                                         
-                                        <td><Button color="primary" onClick={()=>this.toggleaddpricemodal(pd.stock,pd.productGroupName,pd.products,pd.unit,pd.procuredProductId,pd.productGroupId)}>ADD</Button></td>
+                                        <td><Button color="primary" onClick={()=>this.toggleaddpackmodal(pd.stock,pd.productGroupName,pd.products,pd.unit,pd.procuredProductId,pd.productGroupId)}>ADD</Button></td>
                                     </tr>
                                 )
                             })}
@@ -160,8 +262,24 @@ class Packingprocess extends Component {
                         </tbody>
 
                     </Table>
-                    <Modal size="lg" isOpen={this.state.addpriceopen} toggle={()=>{this.setState({addpriceopen:false,tempvariants:[],variantname:'',variantquantity:0,tempunit:'',variantunit:''})}}>
-                        <ModalHeader toggle={()=>{this.setState({addpriceopen:false,tempvariants:[],variantname:'',variantquantity:0,tempunit:'',variantunit:''})}}>
+                    <Row>
+                    <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={this.state.pagecount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}/>
+                    </Row>
+
+
+                    <Modal size="lg" isOpen={this.state.addpackopen} toggle={()=>{this.setState({addpackopen:false,tempvariants:[],variantname:'',variantquantity:0,tempunit:'',variantunit:'',variantid:0})}}>
+                        <ModalHeader toggle={()=>{this.setState({addpackopen:false,tempvariants:[],variantname:'',variantquantity:0,tempunit:'',variantunit:'',variantid:0})}}>
                             ADD PACKING
                         </ModalHeader>
                         <ModalBody>
@@ -178,7 +296,7 @@ class Packingprocess extends Component {
                                             <option value=""></option>
                                             {this.state.tempvariants.map(pr=>{
                                                 return(
-                                                    <option value={pr.quantity+' '+pr.unit}>{pr.quantity+' '+pr.unit}</option>
+                                                    <option value={pr.quantity+' '+pr.unit+' '+pr.id}>{pr.quantity+' '+pr.unit}</option>
                                                 )
                                             })}
                                         
@@ -239,7 +357,7 @@ class Packingprocess extends Component {
                         </ModalBody>
                         <ModalFooter>
                             <Button size="sm" color="success" onClick={()=>this.confirmpack()}>PACK</Button>
-                            <Button size="sm" color="danger" onClick={()=>{this.setState({addpriceopen:false,tempvariants:[],variantname:'',variantquantity:0,tempunit:'',variantunit:''})}} >CANCEL</Button>
+                            <Button size="sm" color="danger" onClick={()=>{this.setState({addpackopen:false,tempvariants:[],variantname:'',variantquantity:0,tempunit:'',variantunit:'',variantid:0})}} >CANCEL</Button>
                             
                         </ModalFooter>
                     </Modal>

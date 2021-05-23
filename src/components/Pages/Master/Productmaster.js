@@ -3,9 +3,8 @@ import { Col, Container ,Row} from 'reactstrap';
 import { Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button } from 'reactstrap';
 import axios from 'axios'
-import {Form,ButtonDropdown,DropdownMenu,DropdownToggle} from 'reactstrap';
 import { Link } from 'react-router-dom';
-import Productcategory from './Productcategory'
+
 
 
 class Productmaster extends Component {
@@ -62,7 +61,7 @@ choosecategory(id,name){
                         <CardImg top  width="200" height="200"  src={url} alt={cat.name} />
                         <CardBody>
                             <CardTitle tag="h5">{cat.name}</CardTitle>
-                            <Link to={{pathname:`/master/productmaster/${cat.id}`, prod:this.state.products.filter((pr)=>cat.id===pr.id),name:cat.name}}>
+                            <Link to={{pathname:`/master/productmaster/${cat.id}`, prod:this.state.products.filter((pr)=>cat.id===pr.id),name:cat.name,id:cat.id}}>
                            <Button color="success">PRODUCTS</Button>
                            </Link>
 

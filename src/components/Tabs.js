@@ -5,13 +5,10 @@ import { Switch, Route,Redirect } from "react-router-dom";
 
 import Contact from "./Pages/ContactUs";
 import Support from "./Pages/Support";
-import Mastertab from './Pages/Master/Mastertab';
 
-import Distributiontab from './Pages/Distribution/Distributiontab';
 
-import Procurementtab from './Pages/Procurement/Procurementtab';
 
-import Packingtab from './Pages/Packing/Packingtab';
+
 
 import Packingprocess from './Pages/Packing/Packingprocess';
 import Currentstock from './Pages/Packing/Currentstock';
@@ -32,8 +29,15 @@ import Addseller from './Pages/Master/Addseller';
 import Productcategory from './Pages/Master/Productcategory';
 import Pricinghistory from './Pages/Master/Pricinghistory';
 
-import Orderstatus from './Pages/Distribution/Orderstatus';
-import Orders from './Pages/Distribution/Orders';
+
+
+import Huborder from './Pages/Hub/Huborder';
+import Hubstock from './Pages/Hub/Hubstock';
+import Orderstatus from './Pages/Hub/Orderstatus';
+import Customerorder from './Pages/Hub/Customerorder';
+
+
+
 
 import Home from './Pages/Home';
 
@@ -50,7 +54,6 @@ function Tabs() {
         <Switch>
           <Route path="/home" component={Home}/>
           
-          <Route path="/master" exact component={Mastertab} />
 
                 <Route path="/master/addproduct" exact component={Addproduct} />
                 <Route path="/master/customer" exact component={Customer} />
@@ -59,15 +62,10 @@ function Tabs() {
                 <Route path="/master/addseller" exact component={Addseller} />
                 <Route path="/master/productmaster/:id" exact component={Productcategory} />
                 <Route path="/master/pricinghistory" exact component={Pricinghistory} />
-                
-
-          <Route path="/distribution" exact component={Distributiontab} />
-
-                <Route path="/distribution/orders" exact component={Orders} />
-                <Route path="/distribution/orderstatus" exact component={Orderstatus} />
+                 
           
           
-          <Route path="/procurement" exact component={Procurementtab} />
+         
 
                 <Route path="/procurement/purchaseentry" exact component={Purchaseentry} />
                 <Route path="/procurement/payments" exact component={Payments} />
@@ -75,12 +73,24 @@ function Tabs() {
                 
 
 
-          <Route path="/packing" exact component={Packingtab} />
+          
 
                 <Route path="/packing/currentstock" exact component={Currentstock} />
                 <Route path="/packing/packingprocess" exact component={Packingprocess} />
                 <Route path="/packing/inventorydispatch" exact component={Inventorydispatch} />
                 <Route path="/packing/packingordergeneration" exact component={Packingordergeneration} />
+
+
+
+                 
+
+                  <Route path="/hub/huborder" exact component={Huborder} />
+                  <Route path="/hub/orderstatus" exact component={Orderstatus} />
+                  <Route path="/hub/hubstock" exact component={Hubstock} />
+                  <Route path="/hub/customerorder" exact component={Customerorder} />
+                  
+
+
 
           <Route path="/contact" exact component={Contact} />
           <Route path="/support" exact component={Support} />

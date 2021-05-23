@@ -405,7 +405,7 @@ console.log('pc',this.state.packingcost,this.state.packcostforedit)
                                     let b={}
                                     return(
                                         <>
-                                     <Label>{va.quantity}{va.unit}</Label>       
+                                     <Label>{va.quantity}{' '}{va.unit}</Label>       
                                     <Input type="text" onChange={this.packcost.bind(this,ind,va.id)}/>
                                         <br></br>  
                                         </>

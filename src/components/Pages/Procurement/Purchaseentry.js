@@ -64,7 +64,8 @@ class Purchaseentry extends Component {
       promptnewseller:0,
       confirmpostflag:0,
       barcodedet:[],
-      barcodeflag:false
+      barcodeflag:false,
+
 
 
 }
@@ -474,13 +475,14 @@ paymentstatus(val){
   if(val==='PARTIAL_PAID'){
     this.setState({
       payment:val,
-      paidamtflag:!this.state.paidamtflag
+      paidamtflag:true
 
     })
   }
   else{
   this.setState({
-    payment:val 
+    payment:val,
+    paidamtflag:false 
   })
 }
 
@@ -960,7 +962,7 @@ paymentstatus(val){
             </Row>
             </FormGroup>
           <Row>
-            <h4>ADDITIONAL COST: Rs.{this.state.additionalcost}</h4>
+            <h6>ADDITIONAL COST: Rs.{this.state.additionalcost}</h6>
           </Row>
       
           
@@ -975,7 +977,7 @@ paymentstatus(val){
           </Row>
          
 
-        <Modal isOpen={this.state.isOpen} toggle={this.openpost}>
+        <Modal size="lg" isOpen={this.state.isOpen} toggle={this.openpost}>
           <ModalHeader toggle={this.openpost}>
             CONFIRM PROCUREMENT
           </ModalHeader>

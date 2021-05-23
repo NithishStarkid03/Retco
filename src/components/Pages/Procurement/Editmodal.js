@@ -133,10 +133,20 @@ class Editmodal extends Component {
           </FormGroup>
           <FormGroup>
             <Label for="measurementunit">MEASUREMENT UNIT</Label>
-            <Input id="measurementunit" value={this.state.measurementunit}  onChange={(e) => {
+            <select id="measurementunit" value={this.state.measurementunit}  onChange={(e) => {
              
               this.setState({ measurementunit:e.target.value });
-            }} />
+            }} >
+               <option >...</option>
+
+              <option value="KILOGRAM">KILOGRAM</option>
+              <option value="GRAM">GRAM</option>
+              <option value="LITRE">LITRE</option>
+              <option value="MILLILITRE">MILLILITRE</option>
+              <option value="UNIT">UNIT</option>
+
+            </select>
+
           </FormGroup>
           <FormGroup>
             <Label for="productcost">PRODUCT COST</Label>
@@ -242,8 +252,8 @@ class Editmodal extends Component {
     
 
             <div className="modal-footer">
-          <Button color="primary"   data-dismiss="modal" onClick={() => { this.handleSave() }}>Edit</Button>{' '}
-          <Button color="secondary" data-dismiss="modal" >Cancel</Button>
+          <Button color="success"   data-dismiss="modal" onClick={() => { this.handleSave() }}>Edit</Button>{' '}
+          <Button color="danger" data-dismiss="modal" >Cancel</Button>
     
           </div>
 

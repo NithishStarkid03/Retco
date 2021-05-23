@@ -17,7 +17,7 @@
                     "procuredProductId":2,
                      "productGroupId":3,
                       "productGroupName":"Thoor",
-                      "batchCode":"THR123",
+                      "batchCode":"THR1234",
                        "stock":500,
                         "unit":"KILOGRAM", 
                         "tax":10,
