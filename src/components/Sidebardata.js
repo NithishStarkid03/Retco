@@ -3,12 +3,17 @@ import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 import * as RiIcons from "react-icons/ri";
+import * as GiIcons from "react-icons/go";
+import * as BsIcons from "react-icons/bs";
+
+
+
   
 export const SidebarData = [
   {
     title: "Master",
     path: "/master",
-    icon: <AiIcons.AiFillHome />,
+    icon: <GiIcons.GoDeviceDesktop/>,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
   
@@ -27,7 +32,8 @@ export const SidebarData = [
         title: "Pricing",
         path: "/master/pricing",
         icon: <IoIcons.IoIosPaper />,
-      },{
+      },
+      {
         title: "ProductMaster",
         path: "/master/productmaster",
         icon: <IoIcons.IoIosPaper />,
@@ -78,7 +84,7 @@ export const SidebarData = [
   {
     title: "Packing",
     path: "/packing",
-    icon: <FaIcons.FaEnvelopeOpenText />,
+    icon:<GiIcons.GoPackage/>,
   
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -112,7 +118,7 @@ export const SidebarData = [
 {
   title: "Hub",
     path: "/hub",
-    icon: <FaIcons.FaEnvelopeOpenText />,
+    icon:  <BsIcons.BsBagFill />,
   
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -142,6 +148,30 @@ export const SidebarData = [
 
     ],
  
+
+},
+
+
+{
+  title: "Management",
+  icon: <FaIcons.FaUserAlt/>,
+  iconClosed: <RiIcons.RiArrowDownSFill />,
+  iconOpened: <RiIcons.RiArrowUpSFill />,
+
+  subNav: [
+      
+    {
+      title: "Add Warehouse",
+      path: "/management/addwarehouse",
+      icon: <IoIcons.IoIosPaper />,
+    },
+    {
+      title: "Add Hub",
+      path: "/management/addhub",
+      icon: <IoIcons.IoIosPaper />,
+    },
+  ]
+
 
 },
   

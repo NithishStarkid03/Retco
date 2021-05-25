@@ -36,6 +36,9 @@ import Hubstock from './Pages/Hub/Hubstock';
 import Orderstatus from './Pages/Hub/Orderstatus';
 import Customerorder from './Pages/Hub/Customerorder';
 
+import Addwarehouse from './Pages/Management/Addwarehouse';
+import Addhub from './Pages/Management/Addhub';
+
 
 
 
@@ -90,6 +93,9 @@ function Tabs() {
                   <Route path="/hub/customerorder" exact component={Customerorder} />
                   
 
+                  <Route path="/management/addwarehouse" exact component={Addwarehouse}/>
+                  <Route path="/management/addhub" exact component={Addhub}/>
+                   
 
 
           <Route path="/contact" exact component={Contact} />

@@ -1,0 +1,49 @@
+{
+  "warehouse": [
+    {
+      "name": "Salem Mart",
+      "gstin": "WHR24",
+      "email": "admin@gmail.com",
+      "phone": "9898786754",
+      "address": {
+        "addressLine1": "143-P",
+        "addressLine2": "Golf Arena",
+        "addressLine3": "Rajaji Nagar",
+        "city": "Salem",
+        "state": "Tamilnadu",
+        "pin": "624321"
+      },
+      "id": 1
+    },
+    {
+      "name": "Theni House",
+      "gstin": "WHR13",
+      "email": "admin@gmail.com",
+      "phone": "7200802280",
+      "address": {
+        "addressLine1": "130-C",
+        "addressLine2": "Arasu Nagar",
+        "addressLine3": "PcPatti",
+        "city": "Theni",
+        "state": "Tamilnadu",
+        "pin": "625533"
+      },
+      "id": 2
+    },
+    {
+      "name": "Kovai Center",
+      "gstin": "WHR07",
+      "email": "admin@gmail.com",
+      "phone": "9898754321",
+      "address": {
+        "addressLine1": "1A",
+        "addressLine2": "Marakadai",
+        "addressLine3": "Townhall",
+        "city": "Coimbatore",
+        "state": "Tamilnadu",
+        "pin": "641212"
+      },
+      "id": 3
+    }
+  ]
+}
