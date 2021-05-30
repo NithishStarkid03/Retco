@@ -1,0 +1,17 @@
+{
+  "huborder": [
+    {
+      "orderedProducts": [
+        {
+          "productId": "1",
+          "quantity": 50
+        },
+        {
+          "productId": "4",
+          "quantity": 15
+        }
+      ],
+      "id": 1
+    }
+  ]
+}
