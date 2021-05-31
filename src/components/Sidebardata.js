@@ -82,8 +82,8 @@ export const SidebarData = [
   },
  
   {
-    title: "Packing",
-    path: "/packing",
+    title: "Warehouse",
+    path: "/warehouse",
     icon:<GiIcons.GoPackage/>,
   
     iconClosed: <RiIcons.RiArrowDownSFill />,
@@ -93,22 +93,22 @@ export const SidebarData = [
       
       {
         title: "PackingProcess",
-        path: "/packing/packingprocess",
+        path: "/warehouse/packingprocess",
         icon: <IoIcons.IoIosPaper />,
       },
       {
         title: "Packing Order Generation",
-        path: "/packing/packingordergeneration",
+        path: "/warehouse/packingordergeneration",
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: "Packing History",
-        path: "/packing/currentstock",
+        title: "Warehouse Stock",
+        path: "/warehouse/warehousestock",
         icon: <IoIcons.IoIosPaper />,
       },
       {
         title: "InventoryDispatch",
-        path: "/packing/inventorydispatch",
+        path: "/warehouse/inventorydispatch",
         icon: <IoIcons.IoIosPaper />,
       },
 

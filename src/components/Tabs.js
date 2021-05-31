@@ -10,10 +10,10 @@ import Support from "./Pages/Support";
 
 
 
-import Packingprocess from './Pages/Packing/Packingprocess';
-import Currentstock from './Pages/Packing/Currentstock';
-import Inventorydispatch from './Pages/Packing/Inventorydispatch';
-import Packingordergeneration from './Pages/Packing/Packingordergeneration';
+import Packingprocess from './Pages/Warehouse/Packingprocess';
+import Warehousestock from './Pages/Warehouse/Warehousestock';
+import Inventorydispatch from './Pages/Warehouse/Inventorydispatch';
+import Packingordergeneration from './Pages/Warehouse/Packingordergeneration';
 
 
 import Purchaseentry from './Pages/Procurement/Purchaseentry';
@@ -50,6 +50,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
+
 function Tabs() {
     return (
         <div>
@@ -78,10 +79,10 @@ function Tabs() {
 
           
 
-                <Route path="/packing/currentstock" exact component={Currentstock} />
-                <Route path="/packing/packingprocess" exact component={Packingprocess} />
-                <Route path="/packing/inventorydispatch" exact component={Inventorydispatch} />
-                <Route path="/packing/packingordergeneration" exact component={Packingordergeneration} />
+                <Route path="/warehouse/warehousestock" exact component={Warehousestock} />
+                <Route path="/warehouse/packingprocess" exact component={Packingprocess} />
+                <Route path="/warehouse/inventorydispatch" exact component={Inventorydispatch} />
+                <Route path="/warehouse/packingordergeneration" exact component={Packingordergeneration} />
 
 
 
