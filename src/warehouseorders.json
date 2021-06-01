@@ -1,0 +1,117 @@
+{
+    "warehouseorders":[
+        {
+            "id": 1,
+            "orderedTimestamp": "2021-05-29T07:06:28.454+00:00",
+            "remarks": "Labeled",
+            "hubId": 1,
+            "hubName": "Villankuruchi",
+            "status": "ALLOTED",
+            "orderedProducts": [
+              {
+                "id": 1,
+                "units": 10,
+                "status": "ACCEPTED",
+                "remarks": "Package extra",
+                "productId": 1,
+                "quantity": 5,
+                "measurementUnit": "KILOGRAM",
+                "productGroupId": 1,
+                "productGroupName": "Ponni",
+                "allottedBatchList": [
+                  {
+                    "warehousePackedStockId": 1,
+                    "batchCode": "PON0001",
+                    "allottedStock": 10
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "orderedTimestamp": "2021-05-31T10:40:33.308+00:00",
+            "remarks": "Overall try",
+            "hubId": 1,
+            "hubName": "Marina",
+            "status": "ALLOTTED",
+            "orderedProducts": [
+              {
+                "id": 4,
+                "units": 5,
+                "status": "ACCEPTED",
+                "remarks": "Self try 2",
+                "productId": 1,
+                "quantity": 5,
+                "measurementUnit": "KILOGRAM",
+                "productGroupId": 1,
+                "productGroupName": "Ponni",
+                "allottedBatchList": [
+                  {
+                    "warehousePackedStockId": 1,
+                    "batchCode": "PON0001",
+                    "allottedStock": 5
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "units": 20,
+                "status": "CANCELLED",
+                "remarks": "Self try 1",
+                "productId": 2,
+                "quantity": 10,
+                "measurementUnit": "KILOGRAM",
+                "productGroupId": 1,
+                "productGroupName": "Ponni",
+                "allottedBatchList": []
+              },
+              {
+                "id": 4,
+                "units": 10,
+                "status": "ACCEPTED",
+                "remarks": "Self try 2",
+                "productId": 1,
+                "quantity": 10,
+                "measurementUnit": "KILOGRAM",
+                "productGroupId": 2,
+                "productGroupName": "Thoor",
+                "allottedBatchList": [
+                  {
+                    "warehousePackedStockId": 2,
+                    "batchCode": "THR0001",
+                    "allottedStock": 8
+                  },
+                  {
+                    "warehousePackedStockId": 3,
+                    "batchCode": "THR0002",
+                    "allottedStock": 2
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "orderedTimestamp": "2021-05-31T11:08:46.808+00:00",
+            "remarks": "Overall try",
+            "hubId": 1,
+            "hubName": "Chepauk",
+            "status": "ORDERED",
+            "orderedProducts": [
+              {
+                "id": 5,
+                "units": 45,
+                "status": "PENDING",
+                "remarks": "Self try ranjith",
+                "productId": 1,
+                "quantity": 5,
+                "measurementUnit": "KILOGRAM",
+                "productGroupId": 1,
+                "productGroupName": "Ponni",
+                "allottedBatchList": []
+              }
+            ]
+          }
+    ]
+}

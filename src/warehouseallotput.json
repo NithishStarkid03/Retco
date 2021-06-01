@@ -1,0 +1,12 @@
+{
+  "allotput": [
+    {
+      "unitsToBeAllotted": 30,
+      "id": 1
+    },
+    {
+      "unitsToBeAllotted": 30,
+      "id": 2
+    }
+  ]
+}
