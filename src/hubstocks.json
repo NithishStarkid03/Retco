@@ -1,0 +1,23 @@
+{"hubstocks":[
+    {
+      "id": 1,
+      "effectiveStock": 9,
+      "totalStock": 9,
+      "deliveredStock": 0,
+      "inTransitStock": 0,
+      "live": true,
+      "timestamp": "2021-05-29T07:56:52.363+00:00",
+      "hubId": 1,
+      "hubName": "Prabhu",
+      "productId": 1,
+      "quantity": 5,
+      "measurementUnit": "KILOGRAM",
+      "productName": "Ponni",
+      "batchCode": "PON0001",
+      "sellingPrice": 18.3063,
+      "minOrderQuantityId": null,
+      "minOrderQuantity": null,
+      "mrp": 19.2216
+    }
+  ]
+}

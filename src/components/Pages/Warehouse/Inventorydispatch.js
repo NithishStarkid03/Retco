@@ -1,8 +1,11 @@
 import { ContactSupportOutlined } from '@material-ui/icons';
 import axios from 'axios';
 import React, { Component } from 'react'
-
 import { Row,Col,CardBody, CardHeader, Container ,Card, CardFooter, Button, Table, Label, CardSubtitle, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input} from 'reactstrap';
+import ReactToPrint from "react-to-print";
+import ReactPaginate from 'react-paginate';
+import './pagination.css';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class Inventorydispatch extends Component {
     constructor(props){
@@ -22,8 +25,23 @@ class Inventorydispatch extends Component {
 
             cancelproductname:'',
             cancelproductid:0,
-            cancelproductvariant:''
+            cancelproductvariant:'',
+
+            dispatchorderselect:[],
+            dispatchorderid:0,
+            chk:false,
+            printmodal:false,
+            printflag:0,
+
+            searchdata:[],
+            searchinput:'',
+            offset:0,
+            perpage:2,
+            currentpage:0,
+            pagecount:0
         }
+        this.handlePageClick = this.handlePageClick.bind(this);
+        
     }
 
 
@@ -36,7 +54,11 @@ class Inventorydispatch extends Component {
     cancelproductid:0,
     cancelproductvariant:''})}
 
-    dispatchconfirmmodal=()=>{this.setState({dispatchconfirm:!this.state.dispatchconfirm})}
+    dispatchconfirmmodal(){
+        this.setState({
+            dispatchconfirm:!this.state.dispatchconfirm,
+            dispatchorderselect:[]
+        })}
 
     
     componentDidMount(){
@@ -46,12 +68,77 @@ class Inventorydispatch extends Component {
         axios.get('http://localhost:8018/warehouseorders').then(res=>{
             console.log('orders',res.data)
 
+            let temp=[]
+            temp=res.data
+            var split=temp.slice(this.state.offset, this.state.offset + this.state.perpage)
+
+
             this.setState({
-                orders:res.data
+                orders:res.data,
+                pagecount:Math.ceil(temp.length/this.state.perpage),
+                searchdata:split
             })
         })
     }
 
+
+    handlePageClick=(e)=>{
+        const selectedpage=e.selected;
+        const offset=selectedpage*this.state.perpage
+      
+      
+      this.setState({
+        currentpage:selectedpage,
+        offset:offset
+      },()=>{
+      
+        this.loaddata()
+      
+      })
+      
+      }
+      
+      loaddata(){
+      
+        const data=this.state.orders
+      
+        const split=data.slice(this.state.offset,this.state.offset+this.state.perpage)
+      
+        this.setState({
+      
+          pagecount:Math.ceil(data.length/this.state.perpage),
+          searchdata:split
+      
+        })
+      
+      }
+
+      handlesearch=(e)=>{
+        this.setState({searchinput:e.target.value},()=>{
+      
+      
+          this.globalsearch();
+      
+        })
+      }
+      
+      globalsearch=()=>{
+      
+      let searchinput=this.state.searchinput;
+      let filterdata=this.state.orders.filter(val=>{
+      
+      return(
+        val.hubName.toLowerCase().includes(searchinput.toLowerCase()) ||
+        val.orderedTimestamp.substring(0,10).split('-').reverse().join('-').toLowerCase().includes(searchinput.toLowerCase())
+      )
+
+      })
+      this.setState({
+      searchdata:filterdata
+      })
+      }
+
+      
 
     openbatchlist(batchlist){
         this.setState({
@@ -125,6 +212,39 @@ class Inventorydispatch extends Component {
         })
     }
 
+    dispatchorder(id){
+        let filterorder=this.state.orders.filter(i=>i.id===id)
+        console.log(filterorder,'After filter')
+        this.setState({
+            dispatchorderselect:filterorder,
+            dispatchconfirm:true,
+            dispatchorderid:id
+        })
+    }
+
+    putdispatch=()=>{
+        //needs to connect fa now simple alert
+        /*axios.put(''${dispatchorderid})*/
+        
+        alert('DISPATCHED',this.state.dispatchorderid)
+
+        this.setState({
+            dispatchorderselect:[],
+            dispatchorderid:0,
+            dispatchconfirm:false,
+            printflag:0
+        },()=>{this.getorders()})
+    }
+
+    deleteprinted(){
+        this.setState({
+            printmodal:false,
+            chk:false,
+            printflag:1
+            
+        })
+    }
+
     render() {
         return (
             <Container>
@@ -132,10 +252,24 @@ class Inventorydispatch extends Component {
                     <center><h4>ORDER DISPATCH</h4></center>
                     <Card>
                         <CardHeader>
-                            ORDERS
+                           <center>ORDERS</center> 
+                            <Row>
+                            <b>Search</b>: <input
+                        style={{ marginLeft: 5 }}
+                        type="text"
+                        placeholder="Type to search..."
+                        value={this.state.searchinput}
+                        onChange={e => this.handlesearch(e)}
+                    
+                        />
+                        <DeleteIcon onClick={()=>this.setState({searchinput:'',searchdata:this.state.orders})}></DeleteIcon>
+                        {this.state.searchdata.length === 0 && <span>No records found!</span> }
+                        </Row>
+                        <br></br>
                         </CardHeader>
+                        
                         <CardBody>
-                        {this.state.orders.map((odr,ind)=>{
+                        {this.state.searchdata.map((odr,ind)=>{
                             return(
                                 <>
                                 <Card>
@@ -188,14 +322,31 @@ class Inventorydispatch extends Component {
                                     </Table>
                                     </CardBody>
                                     <CardFooter>
-                                        <Button color="success" size="sm">DISPATCH</Button>
+                                        <Button color="success" size="sm" onClick={()=>this.dispatchorder(odr.id)}>DISPATCH</Button>
                                     </CardFooter>
                                 </Card>
                                 <br></br>
                                 </>
                             )
                         })}
+
                         </CardBody>
+                        <CardFooter>
+                        <Row>
+                            <ReactPaginate
+                            previousLabel={"prev"}
+                            nextLabel={"next"}
+                            breakLabel={"..."}
+                            breakClassName={"break-me"}
+                            pageCount={this.state.pagecount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={"pagination"}
+                            subContainerClassName={"pages pagination"}
+                            activeClassName={"active"}/>
+                        </Row>
+                        </CardFooter>
                     </Card>
                     
                         <Modal isOpen={this.state.batchlistmodal} toggle={()=>this.setState({batchlistmodal:false})}>
@@ -284,11 +435,159 @@ class Inventorydispatch extends Component {
                             <Button size="sm" color="success" onClick={this.putcancel}>CONFIRM</Button>
                             <Button size="sm" color="danger" onClick={()=>this.cancelconfirmmodal()}>CANCEL</Button>
                         </ModalFooter>
-                        </Modal>                  
+                        </Modal>
+
+                        <Modal isOpen={this.state.dispatchconfirm} toggle={()=>this.dispatchconfirmmodal()}>
+                        <ModalHeader toggle={()=>this.dispatchconfirmmodal()}>CONFIRM DISPATCH</ModalHeader>
+                        <ModalBody>
+                                
+                        {this.state.dispatchorderselect.map((odr,ind)=>{
+                            return(
+                                <>
+                                <Card>
+                                    <CardHeader>
+                                        
+                                        <Row>{ind+1})<Col><b>HUB:</b>{' '}{odr.hubName}</Col></Row>
+                                        <Row><Col><b>ORDER DATE:</b>{' '}{odr.orderedTimestamp.substring(0,10).split('-').reverse().join('-')}</Col></Row>
+                                    </CardHeader> 
+                                    <CardBody>
+                                    <CardSubtitle>PRODUCT LIST</CardSubtitle>
+                                    <Table hover size="md">
+                                        <thead>
+                                            <tr>
+                                                <th>SNo</th>
+                                                <th>PRODUCT NAME</th>
+                                                <th>VARIANT</th>
+                                                <th>UNITS ORDERED</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {odr.orderedProducts.map((opr,i)=>{
+                                                if(opr.status!='CANCELLED'){
+                                                    return(
+                                                        <tr key={i}>
+                                                            <td>{i+1}</td>
+                                                            <td>{opr.productGroupName}</td>
+                                                            <td>{opr.quantity+' '+opr.measurementUnit}</td>
+                                                            <td>{opr.units}</td> 
+                                                        </tr>
+                                                    )
+                                                }
+                                                
+                                            })}
+                                        </tbody>
+                                    </Table>
+                                    </CardBody>
+                                </Card>
+                                </>
+                            )})}
+                        </ModalBody>
+                        <ModalFooter>
+                            {this.state.printflag===1?(
+                            <Button color="success" size="sm" onClick={this.putdispatch}>DISPATCH</Button>)
+                            :(
+                                <Button color="success" size="sm" onClick={()=>this.setState({printmodal:true})}>PRINT</Button>
+                            )}
+                            <Button color="danger" size="sm" onClick={()=>this.dispatchconfirmmodal()}>CANCEL</Button>
+                        </ModalFooter>
+                        </Modal>  
+
+
+                       <Modal isOpen={this.state.printmodal} toggle={()=>{this.setState({printmodal:!this.state.printmodal,printflag:0})}}>
+                       <ModalHeader toggle={()=>{this.setState({printmodal:!this.state.printmodal,printflag:0})}}>PACKING ORDER</ModalHeader>
+                       <ModalBody>
+                        <ComponentToPrint
+                            ref={(el) => (this.componentRef = el)}
+                            data={this.state.dispatchorderselect}
+                                    />
+                        </ModalBody>
+                        <ModalFooter>
+                        <Row>
+                        <Col>
+                        <ReactToPrint
+                            trigger={() => <Button>Print</Button>}
+                            content={() => this.componentRef}
+                        />
+                        </Col>
+                        <Col >
+                        <Input type="checkbox" onClick={()=>{this.setState({chk:!this.state.chk})}}/>{' '}
+                            PRINTED</Col>
+                            <Col>
+                        {this.state.chk?(
+                        <Button color="danger" onClick={() => this.deleteprinted()}>
+                            Close
+                        </Button>
+                        ):(<h1>{''}</h1>)}
+                        </Col>
+                        </Row>
+                        </ModalFooter>
+                        </Modal>
+
+
                 </div>
             </Container>
         )
     }
 }
+
+
+class ComponentToPrint extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        ewaybilldata: this.props.data
+      };
+    
+    }
+  
+    render() {
+      return (
+          <>
+        {this.state.ewaybilldata.map((odr,ind)=>{
+             return(
+                 <>
+                <Card>
+                <CardHeader>
+                    <Row><Col><b>HUB:</b>{' '}{odr.hubName}</Col></Row>
+                    <Row><Col><b>ORDER DATE:</b>{' '}{odr.orderedTimestamp.substring(0,10).split('-').reverse().join('-')}</Col></Row>
+                </CardHeader> 
+                <CardBody>
+                        <CardSubtitle>PRODUCT LIST</CardSubtitle>
+                        <Table>
+                        <thead>
+                            <tr>
+                            <th>SNo</th>
+                            <th>PRODUCT NAME</th>
+                            <th>VARIANT</th>
+                            <th>UNITS ORDERED</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {odr.orderedProducts.map((opr,i)=>{
+                                if(opr.status!='CANCELLED'){
+                                    return(
+                                        <tr key={i}>
+                                            <td>{i+1}</td>
+                                            <td>{opr.productGroupName}</td>
+                                            <td>{opr.quantity+' '+opr.measurementUnit}</td>
+                                            <td>{opr.units}</td> 
+                                        </tr>
+                                    )
+                                }
+                                
+                            })}
+                            </tbody>
+                        </Table>
+                        </CardBody> 
+                        </Card>
+
+                        </> 
+                         )})}  
+
+                </>
+      )
+}  
+} 
+
 
 export default Inventorydispatch
