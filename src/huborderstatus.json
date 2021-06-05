@@ -1,0 +1,52 @@
+{
+    "orderstatus":[
+                {
+                "id":1,  
+                "status":"DELIVERED",
+                "orderedTimestamp": "2021-05-31T11:08:46.808+00:00",
+                "orderedProducts":[
+                    {
+                    "productGroupName":"Ponni",
+                    "quantity":10,
+                    "measurementUnit":"KILOGRAM",
+                    "units":50
+
+                },
+                {
+                    "productGroupName":"Thoor",
+                    "quantity":5,
+                    "measurementUnit":"KILOGRAM",
+                    "units":30
+                },
+                {
+                    "productGroupName":"Thoor",
+                    "quantity":15,
+                    "measurementUnit":"KILOGRAM",
+                    "units":40
+                }
+                ]
+            },
+            {
+                "id":2,  
+                "status":"ALLOTED",
+                "orderedTimestamp": "2021-05-28T11:08:46.808+00:00",
+            "orderedProducts":[
+                {
+                "productGroupName":"Ponni",
+                "quantity":10,
+                "measurementUnit":"KILOGRAM",
+                "units":25
+
+            },
+            {
+                "productGroupName":"Ponni",
+                "quantity":5,
+                "measurementUnit":"KILOGRAM",
+                "units":30
+            }
+            ]
+        }
+
+    ]
+
+}

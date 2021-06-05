@@ -1,0 +1,91 @@
+{    
+       
+    "allottedBatchList":[ 
+        
+                    
+            {
+                "id":1,
+                "quantity": 5,
+                "measurementUnit": "KILOGRAM",
+                "productGroupName": "Ponni",
+                "units":50,
+                "warehousePackedStockId": 1,
+                "batchCode": "PON0001",
+                "allottedStock": 35
+            },
+
+            {
+                "id":2,
+                "quantity": 5,
+                "measurementUnit": "KILOGRAM",
+                "productGroupName": "Ponni",
+                "units":50,
+                "warehousePackedStockId": 2,
+                "batchCode": "PON0002",
+                "allottedStock": 15
+            },
+            
+    
+     
+            {
+                    "id":3,
+                    "productGroupName":"Thoor",
+                    "quantity":5,
+                    "measurementUnit":"KILOGRAM",
+                    "units":30,   
+                    "warehousePackedStockId": 1,
+                    "batchCode": "THR0001",
+                    "allottedStock": 15
+            },
+
+            {
+                "id":4,
+                "productGroupName":"Thoor",
+                "quantity":5,
+                "measurementUnit":"KILOGRAM",
+                "units":30,
+                "warehousePackedStockId": 2,
+                "batchCode": "THR0002",
+                "allottedStock": 10
+            },
+            {
+                "id":5,
+                "productGroupName":"Thoor",
+                "quantity":5,
+                "measurementUnit":"KILOGRAM",
+                "units":30,
+                "warehousePackedStockId": 2,
+                "batchCode": "THR0003",
+                "allottedStock": 5
+            },
+
+    
+            {
+                "id":6,
+                "productGroupName":"Thoor",
+                "quantity":15,
+                "measurementUnit":"KILOGRAM",
+                "units":40,
+                "warehousePackedStockId": 1,
+                "batchCode": "THR0001",
+                "allottedStock": 20
+            },
+
+            {
+
+                "id":7,
+                "productGroupName":"Thoor",
+                "quantity":15,
+                "measurementUnit":"KILOGRAM",
+                "units":40,
+                "warehousePackedStockId": 2,
+                "batchCode": "THR0002",
+                "allottedStock": 20
+            }
+          
+
+    
+
+]
+    
+}
