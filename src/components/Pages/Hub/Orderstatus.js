@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Row,Col,CardBody, CardHeader, Container ,Card, CardFooter, Button, Table, Label, CardSubtitle, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form} from 'reactstrap';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ReactPaginate from 'react-paginate';
+import './pagination.css';
+
 
  class Orderstatus extends Component {
      constructor(props){
@@ -23,8 +26,17 @@ import DeleteIcon from '@material-ui/icons/Delete';
              unit:0,
 
              tempcheckselect:[],
-             displaybatchcode:''
-         }
+             displaybatchcode:'',
+
+             searchdata:[],
+            searchinput:'',
+            offset:0,
+            perpage:2,
+            currentpage:0,
+            pagecount:0
+        }
+        this.handlePageClick = this.handlePageClick.bind(this);
+
      }
      componentDidMount(){
          this.getorder()
@@ -33,11 +45,78 @@ import DeleteIcon from '@material-ui/icons/Delete';
          axios.get('http://localhost:8022/orderstatus').then(res=>{
              console.log(res.data)
 
+             let temp=[]
+             temp=res.data
+             var split=temp.slice(this.state.offset, this.state.offset + this.state.perpage)
+ 
+
              this.setState({
-                 order:res.data
+                 order:res.data,
+                 pagecount:Math.ceil(temp.length/this.state.perpage),
+                 searchdata:split
+
              })
          })
      }
+
+
+     handlePageClick=(e)=>{
+        const selectedpage=e.selected;
+        const offset=selectedpage*this.state.perpage
+      
+      
+      this.setState({
+        currentpage:selectedpage,
+        offset:offset
+      },()=>{
+      
+        this.loaddata()
+      
+      })
+      
+      }
+      
+      loaddata(){
+      
+        const data=this.state.order
+      
+        const split=data.slice(this.state.offset,this.state.offset+this.state.perpage)
+      
+        this.setState({
+      
+          pagecount:Math.ceil(data.length/this.state.perpage),
+          searchdata:split
+      
+        })
+      
+      }
+
+      handlesearch=(e)=>{
+        this.setState({searchinput:e.target.value},()=>{
+      
+      
+          this.globalsearch();
+      
+        })
+      }
+      
+      globalsearch=()=>{
+      
+      let searchinput=this.state.searchinput;
+      let filterdata=this.state.order.filter(val=>{
+      
+      return(
+        val.status.toLowerCase().includes(searchinput.toLowerCase()) ||
+        val.orderedTimestamp.substring(0,10).split('-').reverse().join('-').toLowerCase().includes(searchinput.toLowerCase())
+      )
+
+      })
+      this.setState({
+      searchdata:filterdata
+      })
+      }
+
+
 
      cancelconfirmmodal(id,products)
      {
@@ -200,7 +279,20 @@ import DeleteIcon from '@material-ui/icons/Delete';
                 <div className="App">
                     <center><h4>ORDER STATUS</h4></center>
                     <br></br>
-                    {this.state.order.map((ord,ind)=>{
+                    <Row>
+                            <b>Search</b>: <input
+                        style={{ marginLeft: 5 }}
+                        type="text"
+                        placeholder="Type to search..."
+                        value={this.state.searchinput}
+                        onChange={e => this.handlesearch(e)}
+                    
+                        />
+                        <DeleteIcon onClick={()=>this.setState({searchinput:'',searchdata:this.state.order})}></DeleteIcon>
+                        {this.state.searchdata.length === 0 && <span>No records found!</span> }
+                        </Row>
+                        <br></br>
+                    {this.state.searchdata.map((ord,ind)=>{
                         return(
                         <>
                         <Card>
@@ -243,6 +335,21 @@ import DeleteIcon from '@material-ui/icons/Delete';
                     </>
                         )
                     })}
+                    <Row>
+                            <ReactPaginate
+                            previousLabel={"prev"}
+                            nextLabel={"next"}
+                            breakLabel={"..."}
+                            breakClassName={"break-me"}
+                            pageCount={this.state.pagecount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={"pagination"}
+                            subContainerClassName={"pages pagination"}
+                            activeClassName={"active"}/>
+                        </Row>
+
                     <Modal isOpen={this.state.cancelconfirm} toggle={()=>this.setState({cancelconfirm:false,selectorderid:0,tempproducts:[]})}>
                         <ModalHeader toggle={()=>this.setState({cancelconfirm:false,selectorderid:0,tempproducts:[]})}>CONFIRM CANCEL</ModalHeader>
                         <ModalBody>
